@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class cinema {
+public class Cinema {
 
 
     @Id
@@ -47,9 +47,9 @@ public class cinema {
     public void setPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
-    public cinema() {
+    public Cinema() {
     }
-    public cinema(String name, String adress, String city, String postalCode) {
+    public Cinema(String name, String adress, String city, String postalCode) {
         this.name = name;
         this.adress = adress;
         this.city = city;
@@ -60,6 +60,19 @@ public class cinema {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("cinema{");
+        sb.append("id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", adress=").append(adress);
+        sb.append(", city=").append(city);
+        sb.append(", postalCode=").append(postalCode);
+        sb.append('}');
+        return sb.toString();
     }
 
     
