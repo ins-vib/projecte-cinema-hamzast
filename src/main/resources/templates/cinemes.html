@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CinemaDaw</title>
+   
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<h1>Llista cinemes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Nom
+            </th>
+            <th>
+                Ciutat
+            </th>
+
+
+
+        </tr>
+
+
+
+
+    </thead>
+    <tbody>
+        <tr th:each="cinema: ${llista}">
+            <td th:text="${cinema.name}" > </td>
+            <td th:text="${cinema.city}"> Ciutat</td>
+
+            <td> 
+                <a th:href= "@{/cinema/{id}(id=${cinema.id})}"> Veure detall</a>
+            </td>
+
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
+
+
+
