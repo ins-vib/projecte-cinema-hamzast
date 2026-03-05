@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CinemaDaw</title>
+   
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<h1>Llista pelicules</h1>
+
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Títol
+            </th>
+            <th>
+                Durada
+            </th>
+            
+            <th>
+                Sinopsi
+            </th>
+            <th>
+                Estrena
+            </th>
+        </tr>
+    </thead>
+
+
+   <a th:href= "@{/pelicula/create}"> Crear</a>
+
+    <tbody>
+        <tr th:each="pelicula: ${llista}">
+            <td th:text="${pelicula.Titol}" > pelicula</td>
+            <td th:text="${pelicula.Durada}"> Durada</td>
+            <td th:text="${pelicula.sinopsi}"> Sinopsi</td>
+            <td th:text="${pelicula.estrena}"> Estrena</td>
+                
+                <td>  
+    
+                    <a th:href= "@{/pelicula/{id}(id=${pelicula.id})}"> Veure detall</a>
+                    <a th:href= "@{/pelicula/delete/{id}(id=${pelicula.id})}"> Esborrar</a>
+                    <a th:href= "@{/pelicula/edit/{id}(id=${pelicula.id})}"> Editar</a>
+         
+
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
+
+
+
+
