@@ -11,10 +11,17 @@
 <p>Adreça: <span th:text="${cinema.adress}"></span></p>
 
 <h2>Sales</h2>
+ <a th:href= "@{/room/create/{cinemaId}(cinemaId=${cinema.id})}">Crear</a>
 <ul>
     <li th:each="room : ${cinema.rooms}">
         <span th:text="${room.name}"></span>
         (Capacitat: <span th:text="${room.capacity}"></span>)
+
+           
+            <a th:href= "@{/room/{id}(id=${room.id})}"> Veure detall</a>
+            <a th:href= "@{/room/delete/{id}(id=${room.id})}"> Esborrar</a>
+            <a th:href= "@{/room/edit/{id}(id=${room.id})}"> Editar</a>
+
     </li>
 </ul>
 
