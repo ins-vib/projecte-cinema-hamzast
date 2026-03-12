@@ -1,0 +1,16 @@
+    <form th:action="@{/pelicula/edit}" th:object="${pelicula}" method="post">
+      <legend>Editar película</legend>
+
+<input type="text" th:field="*{id}" hidden />
+
+      <label for="titol">Títol:</label>
+      <input type="text" th:field="*{Titol}" /><br /><br />
+      <label for="durada">Durada:</label>
+      <input type="text" th:field="*{Durada}" /><br /><br />
+      <label for="sinopsi">Sinopsi:</label>
+      <input type="text" th:field="*{sinopsi}" /><br /><br />
+      <label for="estrena">Estrena:</label>
+      <input type="text" th:field="*{estrena}" /><br /><br />
+
+      <button type="submit">Guardar</button>
+    </form>

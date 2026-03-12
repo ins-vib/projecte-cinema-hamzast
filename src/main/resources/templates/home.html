@@ -15,6 +15,9 @@
             <a href="/cinemes">Cinemes</a>
             <a href="#">Contacte</a>
             <a href="/pelicula">pelicula</a>
+          
+                
+            </article>
         </nav>
     </header>
 
@@ -24,7 +27,12 @@
     </section>
 
     <footer>
-        <p>2026 Cinema Daw</p>
+        <p>2026 Cinema Daw</p> 
+        
+        <article class="news-card" th:each="news : ${lista}">
+                <h3 th:text="${news.headline}"></h3>
+                <p th:text="${news.body}"></p>
+                
     </footer>
 
 </body>
