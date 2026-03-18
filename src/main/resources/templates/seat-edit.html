@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Silla</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <form th:action="@{/seat/editar}" th:object="${seat}" method="post">
+        <legend>Editar silla</legend>
+
+        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" th:field="*{room.id}" />
+
+        <label>Fila:</label>
+        <input type="number" th:field="*{seatRow}" /><br /><br />
+
+        <label>Número de silla:</label>
+        <input type="number" th:field="*{seatNumber}" /><br /><br />
+
+        <label>Posició X:</label>
+        <input type="number" th:field="*{posX}" /><br /><br />
+
+        <label>Posició Y:</label>
+        <input type="number" th:field="*{posY}" /><br /><br />
+
+        <label>Tipus:</label>
+        <select th:field="*{type}">
+            <option th:each="t : ${seatTypes}" th:value="${t}" th:text="${t}"></option>
+        </select><br /><br />
+
+        <label>Activa:</label>
+        <input type="checkbox" th:field="*{active}" /><br /><br />
+
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

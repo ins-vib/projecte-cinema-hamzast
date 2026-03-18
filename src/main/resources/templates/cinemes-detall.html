@@ -21,7 +21,7 @@
             <a th:href= "@{/room/{id}(id=${room.id})}"> Veure detall</a>
             <a th:href= "@{/room/delete/{id}(id=${room.id})}"> Esborrar</a>
             <a th:href= "@{/room/edit/{id}(id=${room.id})}"> Editar</a>
-
+           <a th:href="@{/seat/llista/{roomId}(roomId=${room.id})}"> Seients</a>
     </li>
 </ul>
 

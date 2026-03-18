@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detall Silla</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1>Silla #<span th:text="${seat.id}"></span></h1>
+
+<ul>
+    <li>Fila: <span th:text="${seat.seatRow}"></span></li>
+    <li>Número: <span th:text="${seat.seatNumber}"></span></li>
+    <li>Posició X: <span th:text="${seat.posX}"></span></li>
+    <li>Posició Y: <span th:text="${seat.posY}"></span></li>
+    <li>Tipus: <span th:text="${seat.type}"></span></li>
+    <li>Activa: <span th:text="${seat.active}"></span></li>
+</ul>
+
+<a th:href="@{/room/{id}(id=${seat.room.id})}">Tornar a la sala</a>
+
+</body>
+</html>

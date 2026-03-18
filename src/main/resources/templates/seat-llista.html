@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seients</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1>Seients - <span th:text="${room.name}"></span></h1>
+
+<a th:href="@{/seat/create/{roomId}(roomId=${room.id})}">Crear</a>
+
+<ul>
+    <li th:each="seat : ${room.seats}">
+        Fila <span th:text="${seat.seatRow}"></span> -
+        Núm. <span th:text="${seat.seatNumber}"></span> -
+        Tipus: <span th:text="${seat.type}"></span>
+
+        <a th:href="@{/seat/{id}(id=${seat.id})}"> Veure detall</a>
+        <a th:href="@{/seat/delete/{id}(id=${seat.id})}"> Esborrar</a>
+        <a th:href="@{/seat/edit/{id}(id=${seat.id})}"> Editar</a>
+    </li>
+</ul>
+
+
+
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <g th:each="seat : ${room.seats}">
+        <svg class="seat" viewBox="0 0 491.5 491.5" width="30" height="30"
+             th:x="${seat.posX * 40}" th:y="${seat.posY * 40}"
+             xmlns="http://www.w3.org/2000/svg">
+            <path d="M449.149,216.2v-99c0-64.7-53.4-117.2-119.1-117.2h-168.4
+                c-65.6,0-119.1,52.6-119.1,117.2v99
+                c-25,12.1-42.5,37.5-42.5,67.1v208.2h163.8V471h163.8v20.5h163.8V283.3
+                C491.649,253.7,474.149,228.2,449.149,216.2z
+                M122.949,307.2v41v102.4h-81.9V283.3
+                c0-16,11.2-29.4,26.2-32.8h0.2
+                c2.6-0.6,5-0.9,7.3-0.9h14.4
+                c18.6,0,33.8,15.1,33.8,33.8V307.2z
+                M327.749,348.1h-163.8v-41h163.8V348.1z
+                M368.749,450.5V348.1v-41v-23.9
+                c0-18.6,15.1-33.8,33.8-33.8h14.3
+                c2.3,0,4.7,0.3,7.3,0.9h0.2
+                c15,3.4,26.2,16.8,26.2,32.8v167.4H368.749z"
+                  fill="currentColor"/>
+        </svg>
+    </g>
+</svg>
+
+<a th:href="@{/cinema/{id}(id=${room.cinema.id})}">Tornar al cinema</a>
+
+</body>
+</html>

@@ -7,5 +7,5 @@ import com.daw.CinemaDaw.domain.cinema.Seat;
 
 
 public interface SeatRepository extends JpaRepository<Seat, Long>{
-    
+    void deleteAllByRoomId(Long roomId);
 }

@@ -11,18 +11,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.daw.CinemaDaw.domain.cinema.Cinema;
 import com.daw.CinemaDaw.domain.cinema.Room;
+import com.daw.CinemaDaw.domain.cinema.Seat;
+import com.daw.CinemaDaw.domain.cinema.SeatType;
 import com.daw.CinemaDaw.repository.CinemaRepository;
 import com.daw.CinemaDaw.repository.RoomRepository;
+import com.daw.CinemaDaw.repository.SeatRepository;
+
+import jakarta.transaction.Transactional;
 
 @Controller
 public class RoomController {
 
     private RoomRepository roomRepository;
     private CinemaRepository cinemaRepository;
+    private SeatRepository seatRepository;
 
-    public RoomController(RoomRepository roomRepository, CinemaRepository cinemaRepository) {
+    public RoomController(RoomRepository roomRepository, CinemaRepository cinemaRepository, SeatRepository seatRepository) {
         this.roomRepository = roomRepository;
         this.cinemaRepository = cinemaRepository;
+        this.seatRepository = seatRepository;
+    }
+
+    private void generateSeats(Room room) {
+        int capacity = room.getCapacity();
+        int cols = (int) Math.ceil(Math.sqrt(capacity));
+        int rows = (int) Math.ceil((double) capacity / cols);
+
+        int seatsCreated = 0;
+        for (int i = 0; i < rows && seatsCreated < capacity; i++) {
+            String rowLetter = String.valueOf((char) ('A' + i));
+            for (int j = 1; j <= cols && seatsCreated < capacity; j++) {
+                Seat seat = new Seat(rowLetter, j, j, i, SeatType.STANDARD, true);
+                seat.setRoom(room);
+                seatRepository.save(seat);
+                seatsCreated++;
+            }
+        }
     }
 
     @GetMapping("/room/create/{cinemaId}")
@@ -35,18 +59,17 @@ public class RoomController {
         return "/rooms/room-crear";
     }
 
-     @PostMapping("/room/new")
-    public String altaPelicula(@ModelAttribute Room room) {
+    @PostMapping("/room/new")
+    public String altaRoom(@ModelAttribute Room room) {
         Long cinemaid = room.getCinema().getId();
         Optional<Cinema> cinema = cinemaRepository.findById(cinemaid);
         if (cinema.isPresent()) {
             room.setCinema(cinema.get());
         }
         roomRepository.save(room);
+        generateSeats(room);
         return "redirect:/cinema/" + cinemaid;
     }
-
-    private static final int CELL_SIZE = 46;
 
     @GetMapping("/room/edit/{id}")
     public String editRoom(@PathVariable Long id, Model model) {
@@ -59,8 +82,9 @@ public class RoomController {
         return "redirect:/cinemes";
     }
 
-    @PostMapping("/room/editar")
-    public String editPelicula(@ModelAttribute Room room) {
+  @Transactional
+@PostMapping("/room/editar")
+public String editRoom(@ModelAttribute Room room) {
         Long cinemaid = room.getCinema().getId();
         Long roomId = room.getId();
 
@@ -69,10 +93,20 @@ public class RoomController {
 
         if (existingRoom.isPresent() && cinema.isPresent()) {
             Room roomToUpdate = existingRoom.get();
+            boolean capacityChanged = roomToUpdate.getCapacity() != room.getCapacity();
+
             roomToUpdate.setName(room.getName());
             roomToUpdate.setCapacity(room.getCapacity());
             roomToUpdate.setCinema(cinema.get());
             roomRepository.save(roomToUpdate);
+
+            // Si cambia la capacidad, borrar seats antiguos y generar nuevos
+            if (capacityChanged) {
+    seatRepository.deleteAllByRoomId(roomToUpdate.getId());
+    roomToUpdate.setCapacity(room.getCapacity());
+    generateSeats(roomToUpdate);
+}
+            
         }
 
         return "redirect:/cinema/" + cinemaid;
@@ -90,8 +124,6 @@ public class RoomController {
         return "redirect:/cinema";
     }
 
-   
-
     @GetMapping("/room/{id}")
     public String detall(@PathVariable Long id, Model model) {
         Optional<Room> optional = roomRepository.findById(id);
@@ -102,5 +134,4 @@ public class RoomController {
         model.addAttribute("room", room);
         return "/rooms/room-detail";
     }
-
 }
