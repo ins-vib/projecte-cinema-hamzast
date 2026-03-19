@@ -28,8 +28,11 @@
             <option th:each="t : ${seatTypes}" th:value="${t}" th:text="${t}"></option>
         </select><br /><br />
 
-        <label>Activa:</label>
-        <input type="checkbox" th:field="*{active}" /><br /><br />
+        <label>Estat:</label>
+<select th:field="*{active}">
+    <option value="true">Lliure</option>
+    <option value="false">Ocupat</option>
+</select><br /><br />
 
         <button type="submit">Guardar</button>
     </form>

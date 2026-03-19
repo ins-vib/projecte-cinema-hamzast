@@ -11,25 +11,43 @@
 
 <a th:href="@{/seat/create/{roomId}(roomId=${room.id})}">Crear</a>
 
-<ul>
-    <li th:each="seat : ${room.seats}">
-        Fila <span th:text="${seat.seatRow}"></span> -
-        Núm. <span th:text="${seat.seatNumber}"></span> -
-        Tipus: <span th:text="${seat.type}"></span>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Fila</th>
+            <th>Número</th>
+            <th>Posició X</th>
+            <th>Posició Y</th>
+            <th>Tipus</th>
+            <th>estat</th>
+            <th>Accions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="seat : ${room.seats}">
+            <td th:text="${seat.seatRow}"></td>
+            <td th:text="${seat.seatNumber}"></td>
+            <td th:text="${seat.posX}"></td>
+            <td th:text="${seat.posY}"></td>
+            <td th:text="${seat.type}"></td>
+            <td th:text="${seat.active} ? 'Lliure' : 'Ocupat'"></td>
+            <td>
+                <a th:href="@{/seat/{id}(id=${seat.id})}">Veure detall</a>
+                <a th:href="@{/seat/delete/{id}(id=${seat.id})}">Esborrar</a>
+                <a th:href="@{/seat/edit/{id}(id=${seat.id})}">Editar</a>
+            </td>
+        </td>
+        </tr>
+    </tbody>
+</table>
 
-        <a th:href="@{/seat/{id}(id=${seat.id})}"> Veure detall</a>
-        <a th:href="@{/seat/delete/{id}(id=${seat.id})}"> Esborrar</a>
-        <a th:href="@{/seat/edit/{id}(id=${seat.id})}"> Editar</a>
-    </li>
-</ul>
-
-
-
-<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+<br/>
+<svg style="width:30%; height:auto;" 
+     th:attr="viewBox='0 0 ' + (${room.seats[0] != null} ? '800' : '800') + ' ' + (${room.seats.size()} / 11 * 60 + 60)"
+     xmlns="http://www.w3.org/2000/svg">
     <g th:each="seat : ${room.seats}">
-        <svg class="seat" viewBox="0 0 491.5 491.5" width="30" height="30"
-             th:x="${seat.posX * 40}" th:y="${seat.posY * 40}"
-             xmlns="http://www.w3.org/2000/svg">
+        <svg class="seat" viewBox="0 0 491.5 491.5" width="50" height="50"
+th:x="${(seat.posX - 1) * 60}" th:y="${seat.posY * 60}"             xmlns="http://www.w3.org/2000/svg">
             <path d="M449.149,216.2v-99c0-64.7-53.4-117.2-119.1-117.2h-168.4
                 c-65.6,0-119.1,52.6-119.1,117.2v99
                 c-25,12.1-42.5,37.5-42.5,67.1v208.2h163.8V471h163.8v20.5h163.8V283.3
@@ -48,6 +66,7 @@
     </g>
 </svg>
 
+<br/>
 <a th:href="@{/cinema/{id}(id=${room.cinema.id})}">Tornar al cinema</a>
 
 </body>

@@ -15,10 +15,8 @@
     <li>Posició X: <span th:text="${seat.posX}"></span></li>
     <li>Posició Y: <span th:text="${seat.posY}"></span></li>
     <li>Tipus: <span th:text="${seat.type}"></span></li>
-    <li>Activa: <span th:text="${seat.active}"></span></li>
-</ul>
+<li>Estat: <span th:text="${seat.active} ? 'Lliure' : 'Ocupat'"></span></li></ul>
 
-<a th:href="@{/room/{id}(id=${seat.room.id})}">Tornar a la sala</a>
-
+<a th:href="@{/seat/llista/{roomId}(roomId=${seat.room.id})}">Tornar als seients</a>
 </body>
 </html>
