@@ -52,14 +52,14 @@ public class SeatController {
     }
 
     // Guardar nova silla
-    @PostMapping("/seat/new")
+ @PostMapping("/seat/new")
 public String createSeat(@ModelAttribute Seat seat) {
     Long roomId = seat.getRoom().getId();
     Optional<Room> room = roomRepository.findById(roomId);
     if (room.isPresent()) {
         seat.setRoom(room.get());
         seatRepository.save(seat);
-        Room r = room.get();
+        Room r = roomRepository.findById(roomId).get();
         r.setCapacity(r.getSeats().size());
         roomRepository.save(r);
     }
