@@ -12,6 +12,7 @@ import com.daw.CinemaDaw.domain.cinema.News;
 import com.daw.CinemaDaw.service.NewsService;
 
 @Controller
+
 public class HomeController {
 
     private NewsService newsService;

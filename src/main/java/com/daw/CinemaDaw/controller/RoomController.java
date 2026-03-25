@@ -2,6 +2,7 @@ package com.daw.CinemaDaw.controller;
 
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import com.daw.CinemaDaw.repository.SeatRepository;
 import jakarta.transaction.Transactional;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")  // protege TODOS los métodos de la clase
+
 public class RoomController {
 
     private RoomRepository roomRepository;

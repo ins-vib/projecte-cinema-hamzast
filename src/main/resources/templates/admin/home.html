@@ -1,5 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CinemaDaw</title>
+   
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
 
-<h1>Panell d'Administració</h1>
-<p>Benvingut administrador</p>
+<body>
 
-<a href="/logout">Logout</a>
+    <header>
+        <h1>Cinema</h1>
+        <nav> 
+            <a href="/cinemes">Cinemes</a>
+            <a href="#">Contacte</a>
+            <a href="/pelicula">pelicula</a>
+            
+            </article>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Viu la magia del cinema</h2>
+        <p> Les millors estrenes, la millor experiencia</p>
+    </section>
+
+    <footer>
+        <p>2026 Cinema Daw</p> 
+        
+        <article class="news-card" th:each="news : ${lista}">
+                <h3 th:text="${news.headline}"></h3>
+                <p th:text="${news.body}"></p>
+
+    </footer>
+
+</body>
+
+</html>

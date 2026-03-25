@@ -4,6 +4,7 @@ package com.daw.CinemaDaw.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import com.daw.CinemaDaw.domain.cinema.Cinema;
 import com.daw.CinemaDaw.repository.CinemaRepository;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")  // protege TODOS los métodos de la clase
 public class cinemaController {
 
     private CinemaRepository cinemaRepository;
@@ -29,7 +31,7 @@ public class cinemaController {
 
         List<Cinema> cinemes = cinemaRepository.findAll();
         model.addAttribute("llista", cinemes);
-        return "cinemes";
+        return "cinema/cinemes";
     }
     
     //detall cinema
@@ -39,7 +41,7 @@ public class cinemaController {
         if(optional.isPresent()){
             Cinema cinema = optional.get();
             model.addAttribute("cinema", cinema);
-            return "cinemes-detall";
+            return "cinema/cinemes-detall";
         }
         return "redirect:/";
        
@@ -52,7 +54,7 @@ public class cinemaController {
     public String create(Model model){
         Cinema cinema = new Cinema();
         model.addAttribute("cinema", cinema);
-        return "create-cinema";
+        return "cinema/create-cinema";
     }
     @PostMapping("/cinema/create")
     public String create(Cinema cinema){
@@ -78,7 +80,7 @@ public class cinemaController {
         if(optional.isPresent()){
             Cinema cinema = optional.get();
             model.addAttribute("cinema", cinema);
-            return "edit-cinema";
+            return "cinema/edit-cinema";
         }
         return "redirect:/";
     }

@@ -2,6 +2,7 @@ package com.daw.CinemaDaw.controller;
 
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ import com.daw.CinemaDaw.repository.RoomRepository;
 import com.daw.CinemaDaw.repository.SeatRepository;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")  // protege TODOS los métodos de la clase
+
 public class SeatController {
 
     private SeatRepository seatRepository;
@@ -36,7 +39,7 @@ public class SeatController {
         Seat seat = optional.get();
         model.addAttribute("seat", seat);
         model.addAttribute("seatTypes", SeatType.values());
-        return "/seat-detail";
+        return "seat/seat-detail";
     }
 
     // Formulari crear silla
@@ -48,7 +51,7 @@ public class SeatController {
         seat.setRoom(room);
         model.addAttribute("seat", seat);
         model.addAttribute("seatTypes", SeatType.values());
-        return "/seat-crear";
+        return "seat/seat-crear";
     }
 
     // Guardar nova silla
@@ -74,7 +77,7 @@ public String createSeat(@ModelAttribute Seat seat) {
             Seat seat = optional.get();
             model.addAttribute("seat", seat);
             model.addAttribute("seatTypes", SeatType.values());
-            return "seat-edit";
+            return "seat/seat-edit";
         }
         return "redirect:/cinemes";
     }
@@ -131,7 +134,7 @@ public String llista(@PathVariable Long roomId, Model model) {
         return "redirect:/cinemes";
     }
     model.addAttribute("room", optional.get());
-    return "seat-llista";
+    return "seat/seat-llista";
 }
 
 

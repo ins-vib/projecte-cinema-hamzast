@@ -4,6 +4,7 @@ package com.daw.CinemaDaw.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import com.daw.CinemaDaw.domain.cinema.pelicula;
 import com.daw.CinemaDaw.repository.PeliculaRepository;
 
 @Controller
+@PreAuthorize("hasRole('ADMIN')")  // protege TODOS los métodos de la clase
+
 public class peliculaController {
 
     private PeliculaRepository peliculaRepository;
@@ -29,7 +32,7 @@ public class peliculaController {
 
         List<pelicula> pelicula = peliculaRepository.findAll();
         model.addAttribute("llista", pelicula);
-        return "pelicula";
+        return "CarpetaPelicula/pelicula";
     }
     
     //detall pelicula
