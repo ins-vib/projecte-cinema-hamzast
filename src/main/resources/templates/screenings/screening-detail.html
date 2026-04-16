@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detall Projecció</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1>Projecció #<span th:text="${screening.id}"></span></h1>
+
+<ul>
+    <li>Pel·lícula: <span th:text="${screening.movie.Titol}"></span></li>
+    <li>Sala: <span th:text="${screening.room.name}"></span></li>
+    <li>Data: <span th:text="${screening.screeningDate}"></span></li>
+    <li>Hora: <span th:text="${screening.screeningTime}"></span></li>
+    <li>Preu: <span th:text="${screening.price}"></span> €</li>
+</ul>
+
+<a th:href="@{/screening/llista/{roomId}(roomId=${screening.room.id})}">Tornar a les projeccions</a>
+
+</body>
+</html>

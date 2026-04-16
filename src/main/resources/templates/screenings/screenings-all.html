@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sessions</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+  <h1>Sessions</h1>
+
+  <!-- Grid de pel·lícules -->
+  <div th:if="${not #lists.isEmpty(pelicules)}">
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Títol</th>
+          <th>Durada</th>
+          <th>Estrena</th>
+          <th>Accions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="pelicula : ${pelicules}">
+          <td th:text="${pelicula.Titol}"></td>
+          <td th:text="${pelicula.Durada} + ' min'"></td>
+          <td th:text="${pelicula.estrena}"></td>
+          <td>
+            <a th:href="@{/screenings/movie/{id}(id=${pelicula.id})}">Veure sessions</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Empty state -->
+  <div th:if="${#lists.isEmpty(pelicules)}">
+    <p>🎬 No hi ha sessions programades</p>
+  </div>
+
+  <br/>
+  <a href="/">Tornar</a>
+
+</body>
+</html>

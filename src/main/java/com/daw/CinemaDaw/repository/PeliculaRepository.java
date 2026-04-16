@@ -15,12 +15,9 @@ import com.daw.CinemaDaw.domain.cinema.pelicula;
 @Repository
 public interface PeliculaRepository extends JpaRepository<pelicula, Long> {
     
-    @Query("""
-            SELECT DISTINCT s.movie
-            FROM Screening s
-            WHERE s.screeningDateTime >= CURRENT_TIMESTAMP
-            """ )
+    @Query("SELECT DISTINCT s.movie FROM Screening s WHERE s.screeningDate >= CURRENT_DATE")
+List<pelicula> findpeliculesWithFuturesScreenings();
 
-            List<pelicula> findpeliculesWithFuturesScreenings();
+            
 
 }

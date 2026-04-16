@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Projeccions</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1>Projeccions - <span th:text="${room.name}"></span></h1>
+
+<a th:href="@{/screening/create/{roomId}(roomId=${room.id})}">Crear</a>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Pel·lícula</th>
+            <th>Data</th>
+            <th>Hora</th>
+            <th>Preu</th>
+            <th>Accions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="screening : ${screenings}">
+            <td th:text="${screening.movie.Titol}"></td>
+            <td th:text="${screening.screeningDate}"></td>
+            <td th:text="${screening.screeningTime}"></td>
+            <td th:text="${screening.price}"></td>
+            <td>
+                <a th:href="@{/screening/{id}(id=${screening.id})}">Veure detall</a>
+                <a th:href="@{/screening/delete/{id}(id=${screening.id})}">Esborrar</a>
+                <a th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<a th:href="@{/room/{id}(id=${room.id})}">Tornar a la sala</a>
+
+</body>
+</html>

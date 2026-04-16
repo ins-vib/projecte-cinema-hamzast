@@ -37,3 +37,4 @@ INSERT INTO pelicula (Titol, Durada, sinopsi, estrena) VALUES
 
 INSERT INTO pelicula (Titol, Durada, sinopsi, estrena) VALUES
 ('Jurassic Park', 127, 'Un parque temático de dinosaurios clonados se convierte en una pesadilla.', '1993-06-11');
+
