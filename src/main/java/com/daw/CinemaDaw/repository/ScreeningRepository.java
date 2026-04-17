@@ -13,6 +13,6 @@ public interface ScreeningRepository extends JpaRepository<Screening, Long> {
 
     List<Screening> findByMovie(pelicula movie);
 
-    @Query("SELECT DISTINCT s.movie FROM Screening s WHERE s.screeningDate >= CURRENT_DATE")
+    @Query("SELECT DISTINCT s.movie FROM Screening s WHERE s.screeningDateTime >= CURRENT_TIMESTAMP")
     List<pelicula> findPeliculesWithFutureScreenings();
 }
