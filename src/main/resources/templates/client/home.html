@@ -1,7 +1,6 @@
 <h1>Pel·lícules disponibles</h1>
 
-<div th:each="movie : ${movies}">
-    <h3 th:text="${movie.title}"></h3>
-</div>
+<a th:href="@{/client/cartelera}">veure cartelera</a>
 
-<a href="/logout">Logout</a>
+
+<a th:href="@{/logout}">Logout</a>

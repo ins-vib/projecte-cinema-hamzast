@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de la Película</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --dark: #0a0a0f;
+  --dark-surface: #12121a;
+  --dark-card: #1a1a26;
+  --text-primary: #f0ece0;
+  --text-muted: #9a9080;
+  --accent: #c9a84c;
+  --border: rgba(201, 168, 76, 0.2);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: var(--dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% -10%, rgba(201, 168, 76, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 90% 90%, rgba(100, 60, 180, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── HEADER ── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 3rem;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  animation: slideDown 0.6s ease both;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cinema-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+}
+
+.cinema-name::before {
+  content: '✦ ';
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.cinema-name::after {
+  content: ' ✦';
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.buttons a {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.55rem 1.3rem;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  color: var(--gold);
+  border: 1px solid var(--border);
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: rgba(201, 168, 76, 0.1);
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(201, 168, 76, 0.15);
+}
+
+.buttons a:not(.btn-secondary) {
+  color: var(--dark);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.buttons a:not(.btn-secondary):hover {
+  background: var(--gold-light);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ── MAIN CONTENT ── */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 5rem 2rem 6rem;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── TITLE ── */
+.movie-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  position: relative;
+  padding-bottom: 1.4rem;
+}
+
+.movie-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* ── SYNOPSIS ── */
+.movie-synopsis {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(240, 236, 224, 0.75);
+  margin: 2.4rem 0 3rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid rgba(201, 168, 76, 0.35);
+  font-style: italic;
+  letter-spacing: 0.01em;
+  max-width: 680px;
+}
+
+/* ── INFO CARD ── */
+.movie-info {
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.9s 0.4s ease both;
+}
+
+.movie-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.movie-info::after {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.movie-info h3 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.6rem;
+}
+
+.movie-info p {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(240, 236, 224, 0.7);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+  letter-spacing: 0.01em;
+}
+
+.movie-info p:last-child {
+  border-bottom: none;
+}
+
+.movie-info p strong {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 140px;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.movie-info p span {
+  color: rgba(240, 236, 224, 0.85);
+}
+
+/* ── DECORATIVE FILM STRIP ── */
+.content::before {
+  content: '● ● ● ● ● ● ● ● ● ●';
+  position: absolute;
+  top: 3rem;
+  right: 2rem;
+  font-size: 0.3rem;
+  letter-spacing: 0.4rem;
+  color: rgba(201, 168, 76, 0.2);
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
+  .header {
+    padding: 1rem 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .content {
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .movie-info {
+    padding: 1.5rem;
+  }
+
+  .movie-info p {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .movie-info p strong {
+    min-width: unset;
+  }
+}</style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="cinema-name">CinemaDaw</div>
+        <div class="buttons">
+            <a th:href="@{/client}" class="btn-secondary">Volver a inicio</a>
+            <a th:href="@{/client/cartelera}">Volver a cartelera</a>
+        </div>
+    </header>
+
+    <main class="content">
+        <h1 class="movie-title" th:text="${pelicula.titol}">Título de la Película</h1>
+        
+        <p class="movie-synopsis" th:text="${pelicula.sinopsi}">
+            Sinopsis de la película.
+        </p>
+        
+        <div class="movie-info">
+            <h3>Información de la película</h3>
+            <p><strong>Duración:</strong> <span th:text="${pelicula.durada}">0</span> minutos</p>
+            <p><strong>Fecha de estreno:</strong> <span th:text="${pelicula.estrena}">YYYY-MM-DD</span></p>
+        </div>
+    </main>
+
+</body>
+</html>

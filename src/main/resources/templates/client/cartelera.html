@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ca" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera - CinemaDaw</title>
+    <style>
+        /* Estilos generales para darle aspecto de cine */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #141414; /* Fondo oscuro */
+            color: #ffffff; /* Texto blanco */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos del encabezado */
+        header {
+            background-color: #000000;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 3px solid #e50914; /* Rojo tipo Netflix/Cine */
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Contenedor donde irán las películas */
+        .contenedor-cartelera {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            /* Crea columnas automáticas que se adaptan al tamaño de la pantalla */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Clase de ejemplo para la tarjeta que tú rellenarás */
+        .tarjeta-pelicula {
+            background-color: #222;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            /* Borde punteado para indicarte que es un espacio de trabajo temporal */
+            border: 2px dashed #555; 
+        }
+
+        .tarjeta-pelicula:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botones generales */
+        .btn {
+            display: inline-block;
+            background-color: #e50914;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f40612;
+        }
+
+        .btn-secundario {
+            background-color: #333;
+        }
+
+        .btn-secundario:hover {
+            background-color: #444;
+        }
+
+        /* Contenedor para centrar el botón de volver */
+        .controles-inferiores {
+            text-align: center;
+            margin: 50px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Cartelera de CinemaDaw</h1>
+        <p>Les millors estrenes a la teva disposició</p>
+    </header>
+
+    <main class="contenedor-cartelera">
+        <article class="tarjeta-pelicula" th:each="pelicula : ${llista}">
+            <p><strong>ID:</strong> <span th:text="${pelicula.id}">1</span></p>
+            <h2 th:text="${pelicula.Titol}">Titol pelicula</h2>
+            <p><strong>Durada:</strong> <span th:text="${pelicula.Durada}">120</span> min</p>
+            <p><strong>Estrena:</strong> <span th:text="${pelicula.estrena}">2026-01-01</span></p>
+            <p th:text="${pelicula.sinopsi}">Sinopsi de la pelicula.</p>
+            <a class="btn" th:href="@{/cartelera/{id}(id=${pelicula.id})}">Veure detall</a>
+        </article>
+    </main>
+
+    <div class="controles-inferiores">
+        <a class="btn btn-secundario" th:href="@{/client}">Tornar</a>
+    </div>
+
+</body>
+</html>

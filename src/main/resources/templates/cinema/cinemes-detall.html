@@ -22,9 +22,12 @@
             <a th:href= "@{/room/delete/{id}(id=${room.id})}"> Esborrar</a>
             <a th:href= "@{/room/edit/{id}(id=${room.id})}"> Editar</a>
            <a th:href="@{/seat/llista/{roomId}(roomId=${room.id})}"> Seients</a>
+             <a th:href="@{/screening/llista/{roomId}(roomId=${room.id})}">
+        Projeccions
+    </a>
     </li>
 </ul>
-<a th:href="@{/screening/llista/{roomId}(roomId=${screening.room.id})}">Tornar a les projeccions</a>
+
 <a href="/cinemes">Tornar</a>
     
 
