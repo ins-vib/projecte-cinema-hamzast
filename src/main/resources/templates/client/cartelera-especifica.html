@@ -9,9 +9,13 @@
 </head>
 <body>
 
+    <div style="max-width:1200px;margin:0 auto;padding:2rem 2rem 0;">
+        <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+    </div>
+
     <section class="hero">
         <div class="hero-inner">
-            <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+          
 
             <div class="hero-grid">
                 <div class="hero-copy">
@@ -50,8 +54,7 @@
                     </div>
                 </aside>
             </div>
-        </div>
-    </section>
+            </section>
 
     <main>
         <section class="content-section">
