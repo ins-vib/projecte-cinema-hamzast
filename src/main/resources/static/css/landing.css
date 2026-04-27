@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --bg-color: #000000;
+  --accent-lila: #bb86fc;
+  --accent-hover: #9965f4;
+  --text-white: #ffffff;
+  --text-muted: #666666;
+  --border-soft: #1a1a1a;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-white);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+header {
+  padding: 2rem 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+header h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #000;
+  background-color: var(--accent-lila);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+}
+
+section {
+  padding: 100px 10%;
+  max-width: 800px;
+}
+
+section h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -3px;
+}
+
+section p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.news-container {
+  padding: 0 10% 100px;
+}
+
+.news-card {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 3rem 0;
+}
+
+.news-card:last-child {
+  border-bottom: none;
+}
+
+.news-card h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+}
+
+.news-card p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin: 0;
+  max-width: 650px;
+}
+
+footer {
+  padding: 4rem 10%;
+  border-top: 1px solid var(--border-soft);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+  section h2 {
+    font-size: 2.5rem;
+  }
+
+  header,
+  section,
+  footer,
+  .news-container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

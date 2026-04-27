@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar asientos - CinemaDaw</title>
+    <link rel="stylesheet" th:href="@{/css/client-header.css}">
+    <link rel="stylesheet" th:href="@{/css/client-seats.css}">
+</head>
+<body>
+
+  <div style="max-width:1240px;margin:0 auto;padding:1.5rem 1.5rem 0;">
+    <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+    <a class="nav-link" th:href="@{/cartelera/{id}(id=${screening.movie.id})}">Volver a la peli</a>
+  </div>
+
+  <div class="screening-bar">
+    <div class="screening-bar__inner">
+      <span class="sbar-item">
+        <span class="sbar-label">Película</span>
+        <span class="sbar-val" th:text="${screening.movie.titol}">-</span>
+      </span>
+      <span class="sbar-sep">·</span>
+      <span class="sbar-item">
+        <span class="sbar-label">Fecha</span>
+        <span class="sbar-val" th:text="${#temporals.format(screening.screeningDateTime, 'EEE d MMM')}">-</span>
+      </span>
+      <span class="sbar-sep">·</span>
+      <span class="sbar-item">
+        <span class="sbar-label">Hora</span>
+        <span class="sbar-val" th:text="${#temporals.format(screening.screeningDateTime, 'HH:mm')}">-</span>
+      </span>
+      <span class="sbar-sep">·</span>
+      <span class="sbar-item">
+        <span class="sbar-label">Sala</span>
+        <span class="sbar-val" th:text="${screening.room.name}">-</span>
+      </span>
+      <span class="sbar-sep" th:if="${screening.room.cinema != null}">·</span>
+      <span class="sbar-item" th:if="${screening.room.cinema != null}">
+        <span class="sbar-label">Cine</span>
+        <span class="sbar-val" th:text="${screening.room.cinema.name}">-</span>
+      </span>
+    </div>
+  </div>
+
+  <div class="cinema-layout">
+    <div class="seat-map">
+      <div class="screen-wrap">
+        <div class="screen-visual"></div>
+        <div class="screen-label">Pantalla</div>
+      </div>
+
+      <div class="feedback feedback--error" th:if="${error}" th:text="${error}"></div>
+      <div class="feedback feedback--success" th:if="${success}" th:text="${success}"></div>
+
+      <div class="no-seats-msg" th:if="${seatsByRow.isEmpty()}">
+        <p>Esta sala aun no tiene asientos configurados.</p>
+      </div>
+
+      <form id="booking-form" th:if="${not seatsByRow.isEmpty()}"
+            th:action="@{/client/screening/{id}/book(id=${screening.id})}" method="post">
+        <div class="seat-grid">
+          <div class="seat-row" th:each="entry : ${seatsByRow}">
+            <span class="row-label" th:text="${entry.key}">A</span>
+            <div class="seats">
+              <label th:each="seat : ${entry.value}"
+                     th:title="|Fila ${entry.key} · Asiento ${seat.seatNumber} · ${seat.type}|"
+                     th:class="${bookedIds.contains(seat.id) ? 'seat occupied' :
+                                (seat.type.name() == 'PREMIUM' ? 'seat premium' :
+                                (seat.type.name() == 'ADAPTED' ? 'seat adapted' : 'seat standard'))}">
+                <input type="checkbox" name="seatIds" th:value="${seat.id}"
+                       th:checked="${preselected.contains(seat.id)}"
+                       th:disabled="${bookedIds.contains(seat.id)}" />
+                <span th:text="${seat.seatNumber}">1</span>
+              </label>
+            </div>
+            <span class="row-label" th:text="${entry.key}">A</span>
+          </div>
+        </div>
+
+        <div class="confirm-wrap">
+          <button type="submit" class="confirm-btn">Anadir al carrito</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="summary-panel">
+      <div class="summary-panel__title">Informacion</div>
+      <p class="summary-info">
+        Marca los asientos que deseas reservar y pulsa <strong>Anadir al carrito</strong>.
+      </p>
+      <p class="summary-meta" th:text="|Precio base por entrada: ${#numbers.formatDecimal(screening.price, 1, 2)} €|">
+        Precio base por entrada: 0.00 EUR
+      </p>
+      <p class="summary-meta">
+        Los asientos que otro usuario haya metido en su carrito aparecen bloqueados como ocupados.
+      </p>
+
+      <div class="legend">
+        <div class="legend-title">Leyenda</div>
+        <div class="legend-item"><span class="legend-dot standard"></span>Estandar</div>
+        <div class="legend-item"><span class="legend-dot premium"></span>Premium</div>
+        <div class="legend-item"><span class="legend-dot adapted"></span>Adaptado</div>
+        <div class="legend-item"><span class="legend-dot selected"></span>Seleccionado</div>
+        <div class="legend-item"><span class="legend-dot occupied"></span>Ocupado</div>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <p>DAW1 2026 · CinemaDaw</p>
+  </footer>
+
+</body>
+</html>

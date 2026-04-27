@@ -1,0 +1,66 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  padding: 60px 10%;
+  margin: 0;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: -3px;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.nav-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.link-cartelera {
+  color: #bb86fc;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+}
+
+.link-logout {
+  color: #555;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 40px;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.nav-link:hover {
+  transform: translateX(10px);
+  opacity: 0.8;
+}
+
+.link-cartelera:hover {
+  color: #d1b3ff;
+  text-shadow: 0 0 15px rgba(187, 134, 252, 0.4);
+}
+
+.link-logout:hover {
+  color: #ff4d4d;
+}

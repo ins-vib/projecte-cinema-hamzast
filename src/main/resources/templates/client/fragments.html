@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <nav th:fragment="clientHeader" class="hero-nav client-global-header">
+    <a class="brand" th:href="@{/client}">CinemaDaw</a>
+    <div class="nav-actions">
+      <a class="nav-link" th:href="@{/client}">Volver a inicio</a>
+      <a class="nav-link" th:href="@{/client/cartelera}">Cartelera</a>
+      <a class="nav-link" th:href="@{/client/cart}">Carrito (<span th:text="${@cartService.itemCount}">0</span>)</a>
+      <a class="nav-link" th:href="@{/client/my-orders}">Mis pedidos</a>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,6 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+    <div class="hero-side">
+    <div class="est-date">// EST. 2026</div>
+    <div class="hero-main">
+        <h2>STRAX donde <br>los sueños<br> cobran vida</h2>
+    </div>
+    <div></div> </div>
 
-<form th:action="@{/login}" method="post">
-    <input type="text" name="username"/>
-    <input type="password" name="password"/>
-    <button>Entrar</button>
-</form>
+<div class="auth-side">
+    <div class="brand">STRAX CINEMA</div>
+    
+    <h3>Acceso al sistema</h3>
+    <p class="subtitle">Introduce tus credenciales para continuar</p>
+
+    <div class="feedback feedback-success" th:if="${param.registered}">
+        Cuenta creada correctamente. Ya puedes iniciar sesion.
+    </div>
+    <div class="feedback feedback-error" th:if="${param.error}">
+        Usuario o contrasena incorrectos.
+    </div>
+    <div class="feedback feedback-success" th:if="${param.logout}">
+        Sesion cerrada correctamente.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <div class="input-group">
+            <label>Usuario</label>
+            <input type="text" name="username" required>
+        </div>
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Entrar →</button>
+    </form>
+
+    <div class="footer-links">
+        <a href="/">← Volver al inicio</a>
+        <a href="/register">Crear cuenta</a>
+    </div>
+</div>
+</body>
+</html>

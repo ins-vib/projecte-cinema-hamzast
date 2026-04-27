@@ -1,16 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar pelicula</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
     <form th:action="@{/pelicula/edit}" th:object="${pelicula}" method="post">
-      <legend>Editar película</legend>
+      <legend>Editar pelicula</legend>
 
-<input type="text" th:field="*{id}" hidden />
+      <input type="hidden" th:field="*{id}" />
 
-      <label for="titol">Títol:</label>
-      <input type="text" th:field="*{Titol}" /><br /><br />
-      <label for="durada">Durada:</label>
-      <input type="text" th:field="*{Durada}" /><br /><br />
-      <label for="sinopsi">Sinopsi:</label>
-      <input type="text" th:field="*{sinopsi}" /><br /><br />
-      <label for="estrena">Estrena:</label>
-      <input type="text" th:field="*{estrena}" /><br /><br />
+      <label>Titol:</label>
+      <input type="text" th:field="*{Titol}" />
+
+      <label>Durada:</label>
+      <input type="text" th:field="*{Durada}" />
+
+      <label>Sinopsi:</label>
+      <input type="text" th:field="*{sinopsi}" />
+
+      <label>Estrena:</label>
+      <input type="text" th:field="*{estrena}" />
 
       <button type="submit">Guardar</button>
     </form>
+</body>
+</html>

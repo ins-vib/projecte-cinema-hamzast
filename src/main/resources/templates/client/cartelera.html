@@ -4,92 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartelera - CinemaDaw</title>
-    <style>
-        /* Estilos generales para darle aspecto de cine */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #141414; /* Fondo oscuro */
-            color: #ffffff; /* Texto blanco */
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Estilos del encabezado */
-        header {
-            background-color: #000000;
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 3px solid #e50914; /* Rojo tipo Netflix/Cine */
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Contenedor donde irán las películas */
-        .contenedor-cartelera {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            /* Crea columnas automáticas que se adaptan al tamaño de la pantalla */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        /* Clase de ejemplo para la tarjeta que tú rellenarás */
-        .tarjeta-pelicula {
-            background-color: #222;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-            /* Borde punteado para indicarte que es un espacio de trabajo temporal */
-            border: 2px dashed #555; 
-        }
-
-        .tarjeta-pelicula:hover {
-            transform: scale(1.05);
-        }
-
-        /* Botones generales */
-        .btn {
-            display: inline-block;
-            background-color: #e50914;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #f40612;
-        }
-
-        .btn-secundario {
-            background-color: #333;
-        }
-
-        .btn-secundario:hover {
-            background-color: #444;
-        }
-
-        /* Contenedor para centrar el botón de volver */
-        .controles-inferiores {
-            text-align: center;
-            margin: 50px 0;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/client-header.css}">
+    <link rel="stylesheet" th:href="@{/css/client-cartelera.css}">
 </head>
 <body>
+
+    <div style="max-width:1200px;margin:0 auto;padding:2rem 2rem 0;">
+        <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+    </div>
 
     <header>
         <h1>Cartelera de CinemaDaw</h1>

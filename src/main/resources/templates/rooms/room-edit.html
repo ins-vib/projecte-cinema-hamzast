@@ -1,17 +1,25 @@
-<form th:action="@{/room/editar}" th:object="${room}" method="post">
-  <legend>Editar sala</legend>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar sala</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <form th:action="@{/room/editar}" th:object="${room}" method="post">
+    <legend>Editar sala</legend>
 
-  <!-- ID de la sala -->
-  <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{cinema.id}" />
 
-  <!-- ID del cine -->
-  <input type="hidden" th:field="*{cinema.id}" />
+    <label>Titol:</label>
+    <input type="text" th:field="*{name}" />
 
-  <label for="titol">Títol:</label>
-  <input type="text" th:field="*{name}" /><br /><br />
+    <label>Capacity:</label>
+    <input type="text" th:field="*{capacity}" />
 
-  <label for="durada">Capacity:</label>
-  <input type="text" th:field="*{capacity}" /><br /><br />
-
-  <button type="submit">Guardar</button>
-</form>
+    <button type="submit">Guardar</button>
+  </form>
+</body>
+</html>

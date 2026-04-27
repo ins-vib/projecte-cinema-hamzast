@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - STRAX CINEMA</title>
+    <link rel="stylesheet" th:href="@{/css/auth.css}">
+</head>
+<body>
+    <div class="hero-side hero-side--register">
+        <div class="est-date">// EST. 2026</div>
+        <div class="hero-main">
+            <h2>Únete a <br>la magia<br> del cine</h2>
+        </div>
+    </div>
+
+    <div class="auth-side auth-side--scroll">
+        <div class="brand">STRAX CINEMA</div>
+        
+        <h3>Crear cuenta</h3>
+        <p class="subtitle">Rellena los datos para registrarte en el sistema</p>
+
+        <div class="feedback feedback-error" th:if="${error}" th:text="${error}"></div>
+
+        <form th:action="@{/register}" method="post">
+            <div class="input-group">
+                <label>Usuario</label>
+                <input type="text" name="username" th:value="${username}" required>
+            </div>
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">Registrarse →</button>
+        </form>
+
+        <div class="footer-links">
+            <a href="/">← Volver al inicio</a>
+            <a href="/login">Ya tengo cuenta</a>
+        </div>
+    </div>
+</body>
+</html>

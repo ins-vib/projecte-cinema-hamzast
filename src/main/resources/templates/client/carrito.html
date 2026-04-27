@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - CinemaDaw</title>
+    <link rel="stylesheet" th:href="@{/css/client-header.css}">
+    <link rel="stylesheet" th:href="@{/css/client-cart.css}">
+</head>
+<body>
+  <div class="page">
+    <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Tus entradas</div>
+        <h1>Carrito</h1>
+      </div>
+      <p>
+        Aqui tienes las entradas que has reservado en tu carrito. Mientras esten aqui, esos asientos quedan bloqueados para otros usuarios.
+      </p>
+    </div>
+
+    <div class="feedback feedback--success" th:if="${success}" th:text="${success}"></div>
+    <div class="feedback feedback--error" th:if="${error}" th:text="${error}"></div>
+
+    <div class="layout">
+      <section class="cart-list">
+        <div class="empty" th:if="${#lists.isEmpty(cartItems)}">
+          <p>No tienes entradas en el carrito todavia.</p>
+          <a th:href="@{/client/cartelera}">Ir a cartelera</a>
+        </div>
+
+        <article class="cart-item" th:each="item : ${cartItems}">
+          <div>
+            <div class="cart-item__movie" th:text="${item.screening.movie.titol}">Pelicula</div>
+            <div class="cart-item__meta">
+              <div th:text="|${#temporals.format(item.screening.screeningDateTime, 'dd/MM/yyyy HH:mm')} · ${item.screening.room.name}|">
+                01/01/2026 20:00 · Sala
+              </div>
+              <div th:text="|Asiento ${item.seat.seatRow}${item.seat.seatNumber} · ${item.seat.type}|">
+                Asiento A1
+              </div>
+            </div>
+          </div>
+          <div class="cart-item__price"
+               th:text="|${#numbers.formatDecimal(item.screening.price + @cartService.getSeatExtra(item.seat), 1, 2)} €|">
+            0.00 €
+          </div>
+          <form class="remove-form" th:action="@{/client/cart/remove/{itemId}(itemId=${item.id})}" method="post">
+            <button type="submit">Quitar</button>
+          </form>
+        </article>
+      </section>
+
+      <aside class="summary">
+        <h2>Resumen</h2>
+        <div class="summary-line">
+          <span>Entradas</span>
+          <strong th:text="${#lists.size(cartItems)}">0</strong>
+        </div>
+        <div class="summary-line">
+          <span>Total</span>
+          <strong th:text="|${#numbers.formatDecimal(cartTotal, 1, 2)} €|">0.00 €</strong>
+        </div>
+
+        <div class="summary-actions" th:if="${not #lists.isEmpty(cartItems)}">
+          <form th:action="@{/client/cart/checkout}" method="post">
+            <button type="submit">Comprar ahora</button>
+          </form>
+          <a th:href="@{/client/cartelera}">Seguir comprando</a>
+          <form th:action="@{/client/cart/clear}" method="post">
+            <button type="submit">Vaciar carrito</button>
+          </form>
+        </div>
+
+        <p class="summary-note">
+          Al comprar, las entradas salen del carrito y pasan a tu pagina de pedidos con sus tickets ya confirmados.
+        </p>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>

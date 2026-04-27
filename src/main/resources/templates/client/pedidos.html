@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis pedidos - CinemaDaw</title>
+    <link rel="stylesheet" th:href="@{/css/client-header.css}">
+    <link rel="stylesheet" th:href="@{/css/client-orders.css}">
+</head>
+<body>
+  <div class="page">
+    <nav th:replace="~{client/fragments :: clientHeader}"></nav>
+
+    <div class="hero">
+      <div>
+        <div class="eyebrow">Entradas compradas</div>
+        <h1>Mis pedidos</h1>
+      </div>
+      <p>
+        Aqui tienes el historial de compras realizadas y todos los tickets ya confirmados.
+      </p>
+    </div>
+
+    <div class="feedback" th:if="${success}" th:text="${success}"></div>
+
+    <div class="empty" th:if="${#lists.isEmpty(orders)}">
+      <p>Todavia no has realizado ninguna compra.</p>
+      <a th:href="@{/client/cartelera}">Ir a cartelera</a>
+    </div>
+
+    <section class="orders" th:if="${not #lists.isEmpty(orders)}">
+      <article class="order-card" th:each="order : ${orders}">
+        <div class="order-head">
+          <div>
+            <div class="order-head__title" th:text="|Pedido #${order.id}|">Pedido #1</div>
+            <div class="order-head__meta"
+                 th:text="|Comprado el ${#temporals.format(order.purchasedAt, 'dd/MM/yyyy HH:mm')}|">
+              Comprado el 01/01/2026 20:00
+            </div>
+          </div>
+          <div class="order-head__meta" th:text="|${#lists.size(order.tickets)} ticket(s)|">1 ticket</div>
+        </div>
+
+        <div class="ticket-list">
+          <div class="ticket-card" th:each="ticket : ${order.tickets}">
+            <div class="ticket-title" th:text="${ticket.screening.movie.titol}">Pelicula</div>
+            <div class="ticket-meta"
+                 th:text="|${#temporals.format(ticket.screening.screeningDateTime, 'dd/MM/yyyy HH:mm')} · ${ticket.screening.room.name}|">
+              01/01/2026 20:00 · Sala
+            </div>
+            <div class="ticket-meta"
+                 th:text="|Asiento ${ticket.seat.seatRow}${ticket.seat.seatNumber} · ${ticket.seat.type}|">
+              Asiento A1
+            </div>
+            <div class="ticket-price" th:text="|${#numbers.formatDecimal(ticket.paidPrice, 1, 2)} €|">0.00 €</div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

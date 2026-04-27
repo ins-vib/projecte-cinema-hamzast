@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+.client-global-header,
+.hero-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  border-radius: 999px;
+  transition: 0.25s ease;
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  color: var(--muted, rgba(255, 255, 255, 0.68));
+  padding: 0.75rem 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-link:hover {
+  border-color: rgba(255, 107, 53, 0.4);
+  color: var(--text, #fff);
+}
+
+@media (max-width: 860px) {
+  .client-global-header,
+  .hero-nav {
+    flex-direction: column;
+    align-items: start;
+  }
+}
