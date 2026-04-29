@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Códigos Promocionales - Admin</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; color: #111; }
+    h1 { margin-bottom: 1rem; }
+    .actions { margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: center; }
+    .btn { padding: .5rem 1.1rem; border-radius: 6px; border: none; cursor: pointer; font-size: .9rem; text-decoration: none; display: inline-block; }
+    .btn-primary { background: #1d4ed8; color: #fff; }
+    .btn-sm { padding: .3rem .8rem; font-size: .8rem; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-warning { background: #f59e0b; color: #fff; }
+    .btn-info { background: #0891b2; color: #fff; }
+    .btn-secondary { background: #6b7280; color: #fff; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { padding: .6rem .8rem; border: 1px solid #e5e7eb; text-align: left; }
+    th { background: #f3f4f6; }
+    .badge { padding: .2rem .6rem; border-radius: 99px; font-size: .75rem; font-weight: 600; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-gray { background: #f3f4f6; color: #374151; }
+    .feedback { padding: .8rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
+    .feedback--success { background: #dcfce7; color: #166534; }
+    .feedback--error { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body>
+  <h1>Códigos Promocionales</h1>
+
+  <div class="feedback feedback--success" th:if="${param.created}">Código creado correctamente.</div>
+  <div class="feedback feedback--success" th:if="${param.updated}">Código actualizado correctamente.</div>
+  <div class="feedback feedback--success" th:if="${param.deleted}">Código eliminado.</div>
+
+  <div class="actions">
+    <a th:href="@{/admin/promos/new}" class="btn btn-primary">+ Nuevo código</a>
+    <a th:href="@{/admin/home}" class="btn btn-secondary">← Volver al panel</a>
+  </div>
+
+  <div th:if="${#lists.isEmpty(promos)}">
+    <p>No hay códigos promocionales todavía.</p>
+  </div>
+
+  <table th:if="${not #lists.isEmpty(promos)}">
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Descuento</th>
+        <th>Válido desde</th>
+        <th>Válido hasta</th>
+        <th>Usos</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="promo : ${promos}">
+        <td><strong th:text="${promo.code}">CODE</strong></td>
+        <td th:text="${promo.discountPercent} + '%'">10%</td>
+        <td th:text="${#temporals.format(promo.validFrom, 'dd/MM/yyyy')}">01/01/2026</td>
+        <td th:text="${#temporals.format(promo.validUntil, 'dd/MM/yyyy')}">31/12/2026</td>
+        <td th:text="${promo.timesUsed} + ' / ' + ${promo.maxUses}">0 / 100</td>
+        <td>
+          <span th:if="${promo.active and promo.valid}" class="badge badge-green">Activo</span>
+          <span th:if="${promo.active and !promo.valid}" class="badge badge-gray">Caducado</span>
+          <span th:if="${!promo.active}" class="badge badge-red">Inactivo</span>
+        </td>
+        <td style="display:flex; gap:.4rem; flex-wrap:wrap;">
+          <a th:href="@{/admin/promos/{id}/edit(id=${promo.id})}" class="btn btn-sm btn-warning">Editar</a>
+          <a th:href="@{/admin/promos/{id}/usages(id=${promo.id})}" class="btn btn-sm btn-info">Usos</a>
+          <form th:action="@{/admin/promos/{id}/toggle(id=${promo.id})}" method="post" style="display:inline">
+            <button type="submit" class="btn btn-sm btn-secondary"
+                    th:text="${promo.active} ? 'Desactivar' : 'Activar'">Toggle</button>
+          </form>
+          <form th:action="@{/admin/promos/{id}/delete(id=${promo.id})}" method="post" style="display:inline"
+                onsubmit="return confirm('¿Eliminar este código?')">
+            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

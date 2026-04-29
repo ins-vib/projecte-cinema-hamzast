@@ -6,6 +6,59 @@
     <title>Carrito - CinemaDaw</title>
     <link rel="stylesheet" th:href="@{/css/client-header.css}">
     <link rel="stylesheet" th:href="@{/css/client-cart.css}">
+    <style>
+      /* ── Promo code block ── */
+      .promo-block {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1.2rem;
+        background: #f9fafb;
+      }
+      .promo-block h3 { margin: 0 0 .8rem; font-size: .95rem; }
+      .promo-input-row { display: flex; gap: .5rem; }
+      .promo-input-row input {
+        flex: 1;
+        padding: .45rem .75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: .9rem;
+        text-transform: uppercase;
+        letter-spacing: .05em;
+      }
+      .promo-input-row button {
+        padding: .45rem 1rem;
+        background: #1d4ed8;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: .9rem;
+      }
+      .promo-applied {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #dcfce7;
+        border: 1px solid #86efac;
+        border-radius: 6px;
+        padding: .5rem .8rem;
+        font-size: .88rem;
+        color: #166534;
+      }
+      .promo-applied button {
+        background: none;
+        border: none;
+        color: #991b1b;
+        cursor: pointer;
+        font-size: .85rem;
+        text-decoration: underline;
+      }
+      .promo-error { color: #dc2626; font-size: .85rem; margin-top: .4rem; }
+      .promo-success { color: #166534; font-size: .85rem; margin-top: .4rem; }
+      .summary-line--discount { color: #166534; font-weight: 600; }
+      .summary-line--total-final { border-top: 2px solid #1d4ed8; margin-top: .4rem; padding-top: .4rem; }
+    </style>
 </head>
 <body>
   <div class="page">
@@ -21,8 +74,9 @@
       </p>
     </div>
 
+    <!-- General feedback -->
     <div class="feedback feedback--success" th:if="${success}" th:text="${success}"></div>
-    <div class="feedback feedback--error" th:if="${error}" th:text="${error}"></div>
+    <div class="feedback feedback--error"   th:if="${error}"   th:text="${error}"></div>
 
     <div class="layout">
       <section class="cart-list">
@@ -53,16 +107,57 @@
         </article>
       </section>
 
+      <!-- ── Summary sidebar ── -->
       <aside class="summary">
         <h2>Resumen</h2>
+
         <div class="summary-line">
           <span>Entradas</span>
           <strong th:text="${#lists.size(cartItems)}">0</strong>
         </div>
         <div class="summary-line">
-          <span>Total</span>
+          <span>Subtotal</span>
           <strong th:text="|${#numbers.formatDecimal(cartTotal, 1, 2)} €|">0.00 €</strong>
         </div>
+
+        <!-- Discount line (only when promo applied and valid) -->
+        <div class="summary-line summary-line--discount" th:if="${promoDiscount != null}">
+          <span th:text="|Descuento (${promoPercent}%)|">Descuento</span>
+          <strong th:text="|- ${#numbers.formatDecimal(promoDiscount, 1, 2)} €|">-0.00 €</strong>
+        </div>
+
+        <!-- Final total -->
+        <div class="summary-line summary-line--total-final" th:if="${promoDiscount != null}">
+          <span>Total final</span>
+          <strong th:text="|${#numbers.formatDecimal(cartTotalWithPromo, 1, 2)} €|">0.00 €</strong>
+        </div>
+
+        <!-- ── Promo code block ── -->
+        <div class="promo-block" th:if="${not #lists.isEmpty(cartItems)}">
+          <h3>¿Tienes un código promocional?</h3>
+
+          <!-- Code already applied -->
+          <div class="promo-applied" th:if="${appliedPromoCode != null}">
+            <span>Código <strong th:text="${appliedPromoCode}">CODE</strong> aplicado</span>
+            <form th:action="@{/client/cart/promo/remove}" method="post">
+              <button type="submit">Quitar</button>
+            </form>
+          </div>
+
+          <!-- Input form (shown only if no code is applied) -->
+          <form th:if="${appliedPromoCode == null}"
+                th:action="@{/client/cart/promo/apply}" method="post">
+            <div class="promo-input-row">
+              <input type="text" name="promoCode" placeholder="CÓDIGO" maxlength="20" required />
+              <button type="submit">Aplicar</button>
+            </div>
+          </form>
+
+          <!-- Flash messages from redirect -->
+          <p class="promo-error"   th:if="${promoError}"   th:text="${promoError}"></p>
+          <p class="promo-success" th:if="${promoSuccess}" th:text="${promoSuccess}"></p>
+        </div>
+        <!-- ── / Promo code block ── -->
 
         <div class="summary-actions" th:if="${not #lists.isEmpty(cartItems)}">
           <form th:action="@{/client/cart/checkout}" method="post">
@@ -76,6 +171,7 @@
 
         <p class="summary-note">
           Al comprar, las entradas salen del carrito y pasan a tu pagina de pedidos con sus tickets ya confirmados.
+          <span th:if="${appliedPromoCode != null}"> El descuento se aplicará al precio final de cada entrada.</span>
         </p>
       </aside>
     </div>

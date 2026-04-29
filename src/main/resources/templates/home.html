@@ -1,38 +1,91 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>CinemaDaw</title>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaDaw — Viu la màgia</title>
     <link rel="stylesheet" th:href="@{/css/landing.css}">
 </head>
 
 <body>
 
+    <!-- ── Header ── -->
     <header>
-        <h1></h1>
-        <nav> 
-            <a href="/login">Login</a>
-           
-            <a href="/register">Register</a>
-            </article>
+        <div class="logo">
+            <span class="logo__dot"></span>
+            CinemaDaw
+        </div>
+        <nav>
+            <a href="/login" class="nav__link">Entrar</a>
+            <a href="/register" class="nav__link nav__link--cta">Registra't</a>
         </nav>
     </header>
 
-    <section>
-        <h2>Viu la magia del cinema</h2>
-        <p> Les millors estrenes, la millor experiencia</p>
+    <!-- ── Hero ── -->
+    <section class="hero">
+        <div class="hero__badge">✦ Ara en pantalla</div>
+        <h1 class="hero__title">
+            Viu la<br>
+            <span class="hero__title--accent">màgia</span><br>
+            del cinema
+        </h1>
+        <p class="hero__sub">Les millors estrenes. La millor experiència.</p>
+        <div class="hero__actions">
+            <a href="/register" class="btn btn--primary">Compra entrades</a>
+            <a href="/login" class="btn btn--ghost">Ja tinc compte</a>
+        </div>
     </section>
 
-    <footer>
-        <p>2026 Cinema Daw</p> 
-        
-        <article class="news-card" th:each="news : ${lista}">
-                <h3 th:text="${news.headline}"></h3>
-                <p th:text="${news.body}"></p>
+    <!-- ── Features ── -->
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-card__icon">🎬</div>
+            <h3>Estrenes cada setmana</h3>
+            <p>Les últimes pel·lícules arriben primer aquí. Sempre actualitzat.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-card__icon">🪑</div>
+            <h3>Tria el teu seient</h3>
+            <p>Selecciona la teva butaca en temps real i reserva en segons.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-card__icon">🎟️</div>
+            <h3>Entrades digitals</h3>
+            <p>Tots els teus tikets guardats i accessibles des del teu perfil.</p>
+        </div>
+    </section>
 
+    <!-- ── News ── -->
+    <div class="news-container" th:if="${lista != null and not #lists.isEmpty(lista)}">
+        <p class="news-eyebrow">Novetats</p>
+        <article class="news-card" th:each="news : ${lista}">
+            <div class="news-card__content">
+                <h3 th:text="${news.headline}">Titular</h3>
+                <p th:text="${news.body}">Cos de la notícia.</p>
+            </div>
+            <div class="news-card__arrow">→</div>
+        </article>
+    </div>
+
+    <!-- ── Footer ── -->
+    <footer>
+        <div class="footer__inner">
+            <div class="footer__left">
+                <span class="logo">
+                    <span class="logo__dot"></span>
+                    CinemaDaw
+                </span>
+                <p>La millor experiència cinematogràfica.</p>
+            </div>
+            <div class="footer__links">
+                <a href="/login">Entrar</a>
+                <a href="/register">Registra't</a>
+            </div>
+        </div>
+        <div class="footer__copy">
+            <p>© 2026 Cinema Daw. Tots els drets reservats.</p>
+        </div>
     </footer>
 
 </body>
-
 </html>

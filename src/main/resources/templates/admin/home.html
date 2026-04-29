@@ -1,39 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>CinemaDaw</title>
-   
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaDaw — Admin</title>
+    <link rel="stylesheet" th:href="@{/css/landing.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-home.css}">
 </head>
 
 <body>
 
     <header>
-        <h1>Cinema</h1>
-        <nav> 
-            <a href="/cinemes">Cinemes</a>
-            <a href="#">Contacte</a>
-            <a href="/pelicula">pelicula</a>
-<a href="/screenings/all">Sessions</a>  
-
+        <div class="logo">
+            <span class="logo__dot"></span>
+            CinemaDaw
+            <span class="logo__badge">Admin</span>
+        </div>
+        <nav>
+            <a href="/cinemes" class="nav__link">Cinemes</a>
+            <a href="/pelicula" class="nav__link">Pel·lícules</a>
+            <a href="/screenings/all" class="nav__link">Sessions</a>
+            <a href="/admin/promos" class="nav__link">Codis Promo</a>
+            <a href="#" class="nav__link">Contacte</a>
         </nav>
     </header>
 
-    <section>
-        <h2>Viu la magia del cinema</h2>
-        <p> Les millors estrenes, la millor experiencia</p>
+    <section class="hero">
+        <div class="hero__badge">✦ Panell d'administració</div>
+        <h1 class="hero__title">
+            Viu la<br>
+            <span class="hero__title--accent">màgia</span><br>
+            del cinema
+        </h1>
+        <p class="hero__sub">Les millors estrenes, la millor experiència.</p>
     </section>
 
-    <footer>
-        <p>2026 Cinema Daw</p> 
-        
-        <article class="news-card" th:each="news : ${lista}">
-                <h3 th:text="${news.headline}"></h3>
-                <p th:text="${news.body}"></p>
+   
 
+    <footer>
+        <div class="footer__inner">
+            <div class="footer__left">
+                <span class="logo">
+                    <span class="logo__dot"></span>
+                    CinemaDaw <span class="logo__badge">Admin</span>
+                </span>
+                <p>Panell de control d'administració.</p>
+            </div>
+            <div class="footer__links">
+                <a href="/">Tornar a la web</a>
+                <a href="/logout" class="nav__link--cta" style="padding: 0.4rem 1rem; border-radius: 4px; color: #000; text-decoration:none;">Tancar Sessió</a>
+            </div>
+        </div>
+        <div class="footer__copy">
+            <p>© 2026 Cinema Daw. Tots els drets reservats.</p>
+        </div>
     </footer>
 
 </body>
-
 </html>

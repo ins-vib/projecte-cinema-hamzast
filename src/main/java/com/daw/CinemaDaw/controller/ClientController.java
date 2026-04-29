@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.daw.CinemaDaw.controller.PromoCartController;
 import com.daw.CinemaDaw.domain.cinema.CartItem;
+import com.daw.CinemaDaw.domain.cinema.PromoCode;
 import com.daw.CinemaDaw.domain.cinema.Screening;
 import com.daw.CinemaDaw.domain.cinema.Seat;
 import com.daw.CinemaDaw.domain.cinema.TicketOrder;
@@ -24,6 +26,9 @@ import com.daw.CinemaDaw.domain.cinema.pelicula;
 import com.daw.CinemaDaw.repository.PeliculaRepository;
 import com.daw.CinemaDaw.repository.ScreeningRepository;
 import com.daw.CinemaDaw.service.CartService;
+import com.daw.CinemaDaw.service.PromoService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ClientController {
@@ -31,13 +36,16 @@ public class ClientController {
     private final PeliculaRepository peliculaRepository;
     private final ScreeningRepository screeningRepository;
     private final CartService cartService;
+    private final PromoService promoService;
 
     public ClientController(PeliculaRepository peliculaRepository,
                             ScreeningRepository screeningRepository,
-                            CartService cartService) {
+                            CartService cartService,
+                            PromoService promoService) {
         this.peliculaRepository = peliculaRepository;
         this.screeningRepository = screeningRepository;
         this.cartService = cartService;
+        this.promoService = promoService;
     }
 
     @GetMapping("/client/cartelera")
@@ -64,9 +72,7 @@ public class ClientController {
     @GetMapping("/client/screening/{id}/seats")
     public String selectSeats(@PathVariable Long id, Model model) {
         Optional<Screening> optional = screeningRepository.findById(id);
-        if (optional.isEmpty()) {
-            return "redirect:/client/cartelera";
-        }
+        if (optional.isEmpty()) return "redirect:/client/cartelera";
 
         Screening screening = optional.get();
         String username = cartService.getCurrentUsername();
@@ -83,9 +89,7 @@ public class ClientController {
                             @RequestParam(name = "seatIds", required = false) List<Long> seatIds,
                             Model model) {
         Optional<Screening> optional = screeningRepository.findById(id);
-        if (optional.isEmpty()) {
-            return "redirect:/client/cartelera";
-        }
+        if (optional.isEmpty()) return "redirect:/client/cartelera";
 
         Screening screening = optional.get();
         User user = cartService.requireCurrentUser();
@@ -110,9 +114,7 @@ public class ClientController {
                 .toList();
 
         CartService.AddSeatsResult result = cartService.addSeats(user, screening, selectedSeats);
-        if (result.getAdded() > 0) {
-            return "redirect:/client/cart?added=" + result.getAdded();
-        }
+        if (result.getAdded() > 0) return "redirect:/client/cart?added=" + result.getAdded();
 
         String error = result.getOccupied() > 0
                 ? "Algunos asientos ya no estan disponibles."
@@ -127,20 +129,41 @@ public class ClientController {
                        @RequestParam(name = "removed", required = false) Integer removed,
                        @RequestParam(name = "cleared", required = false) Boolean cleared,
                        @RequestParam(name = "error", required = false) Boolean error,
+                       HttpSession session,
                        Model model) {
+
         List<CartItem> items = cartService.getCurrentUserItems();
+        String appliedCode = (String) session.getAttribute(PromoCartController.SESSION_PROMO_KEY);
+
         model.addAttribute("cartItems", items);
         model.addAttribute("cartTotal", cartService.getTotalAmount());
+        model.addAttribute("appliedPromoCode", appliedCode);
 
-        if (added != null && added > 0) {
-            model.addAttribute("success", "Se han anadido " + added + " entrada(s) al carrito.");
-        } else if (removed != null && removed > 0) {
-            model.addAttribute("success", "La entrada se ha quitado del carrito.");
-        } else if (Boolean.TRUE.equals(cleared)) {
-            model.addAttribute("success", "El carrito se ha vaciado.");
-        } else if (Boolean.TRUE.equals(error)) {
-            model.addAttribute("error", "No se pudo completar la compra porque algun asiento ya no estaba disponible.");
+        // If there's an applied promo, pass discount info to the view
+        if (appliedCode != null) {
+            String username = cartService.getCurrentUsername();
+            Optional<PromoCode> promo = promoService.findValidForUser(appliedCode, username);
+            if (promo.isPresent()) {
+                double subtotal = cartService.getTotalAmount();
+                double discount = promo.get().applyTo(subtotal);
+                model.addAttribute("promoDiscount", discount);
+                model.addAttribute("promoPercent", promo.get().getDiscountPercent());
+                model.addAttribute("cartTotalWithPromo", Math.max(0, subtotal - discount));
+            } else {
+                // Code became invalid (e.g. used up by someone else) — remove from session
+                session.removeAttribute(PromoCartController.SESSION_PROMO_KEY);
+                model.addAttribute("promoError", "El código ya no es válido y ha sido eliminado.");
+            }
         }
+
+        if (added != null && added > 0)
+            model.addAttribute("success", "Se han anadido " + added + " entrada(s) al carrito.");
+        else if (removed != null && removed > 0)
+            model.addAttribute("success", "La entrada se ha quitado del carrito.");
+        else if (Boolean.TRUE.equals(cleared))
+            model.addAttribute("success", "El carrito se ha vaciado.");
+        else if (Boolean.TRUE.equals(error))
+            model.addAttribute("error", "No se pudo completar la compra porque algun asiento ya no estaba disponible.");
 
         return "client/carrito";
     }
@@ -152,18 +175,20 @@ public class ClientController {
     }
 
     @PostMapping("/client/cart/clear")
-    public String clearCart() {
+    public String clearCart(HttpSession session) {
         cartService.clearCurrentUserCart();
+        session.removeAttribute(PromoCartController.SESSION_PROMO_KEY);
         return "redirect:/client/cart?cleared=1";
     }
 
     @PostMapping("/client/cart/checkout")
-    public String checkoutCart() {
+    public String checkoutCart(HttpSession session) {
         try {
-            TicketOrder order = cartService.checkoutCurrentUserCart();
-            if (order == null) {
-                return "redirect:/client/cart";
-            }
+            String promoCode = (String) session.getAttribute(PromoCartController.SESSION_PROMO_KEY);
+            TicketOrder order = cartService.checkoutCurrentUserCart(promoCode);
+            if (order == null) return "redirect:/client/cart";
+            // Clear promo from session after successful checkout
+            session.removeAttribute(PromoCartController.SESSION_PROMO_KEY);
             return "redirect:/client/my-orders?bought=1";
         } catch (IllegalStateException ex) {
             return "redirect:/client/cart?error=1";
@@ -180,11 +205,8 @@ public class ClientController {
         return "client/pedidos";
     }
 
-    private void populateSeatSelectionModel(Model model,
-                                            Screening screening,
-                                            Set<Long> preselected,
-                                            String error,
-                                            String success) {
+    private void populateSeatSelectionModel(Model model, Screening screening,
+                                            Set<Long> preselected, String error, String success) {
         String username = cartService.getCurrentUsername();
         LinkedHashMap<String, List<Seat>> seatsByRow = screening.getRoom().getSeats().stream()
                 .filter(Seat::isActive)
