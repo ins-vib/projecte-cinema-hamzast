@@ -19,6 +19,8 @@ import com.daw.CinemaDaw.repository.PeliculaRepository;
 
 public class peliculaController {
 
+    
+
     private PeliculaRepository peliculaRepository;
 
     public peliculaController(PeliculaRepository peliculaRepository){

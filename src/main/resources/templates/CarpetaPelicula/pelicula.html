@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CinemaDaw — Llista de Pel·lícules</title>
+    <title>CinemaDaw — Pel·lícules</title>
     <link rel="stylesheet" th:href="@{/css/landing.css}">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/pelicula.css}">
 </head>
 
 <body>
+
     <header>
         <div class="logo">
             <span class="logo__dot"></span>
@@ -16,50 +17,85 @@
             <span class="logo__badge">Admin</span>
         </div>
         <nav>
-            <a href="/cinemes" class="nav__link">Cinemes</a>
-            <a href="/pelicula" class="nav__link" style="color: var(--text);">Pel·lícules</a>
+            <a href="/cinemes"        class="nav__link">Cinemes</a>
+            <a href="/pelicula"       class="nav__link nav__link--active">Pel·lícules</a>
             <a href="/screenings/all" class="nav__link">Sessions</a>
-            <a href="/admin/promos" class="nav__link">Codis Promo</a>
-            <a href="/" class="nav__link">Tornar a la web</a>
+            <a href="/admin/promos"   class="nav__link">Codis Promo</a>
+            <a href="#"               class="nav__link">Contacte</a>
         </nav>
     </header>
 
-    <div class="admin-header-row">
-        <h2>Catàleg de Pel·lícules</h2>
-        <a th:href="@{/pelicula/create}" class="btn btn--primary">+ Nova Pel·lícula</a>
-    </div>
+    <section class="hero">
+        <div class="hero__badge">✦ Gestió del catàleg</div>
+        <div class="hero__row">
+            <div>
+                <h1 class="hero__title">Pel·lícules</h1>
+                <p class="hero__sub">Afegeix, edita i gestiona totes les pel·lícules del catàleg.</p>
+            </div>
+            <a th:href="@{/pelicula/create}" class="btn btn--primary">+ Nova Pel·lícula</a>
+        </div>
+    </section>
 
-    <div class="table-container">
-        <table class="modern-table">
-            <thead>
-                <tr>
-                    <th>Títol</th>
-                    <th>Durada</th>
-                    <th>Sinopsi</th>
-                    <th>Estrena</th>
-                    <th>Accions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="pelicula: ${llista}">
-                    <td th:text="${pelicula.Titol}" style="color: var(--text); font-weight: 600;">pelicula</td>
-                    <td th:text="${pelicula.Durada}">Durada</td>
-                    <td th:text="${pelicula.sinopsi}" class="truncate">Sinopsi</td>
-                    <td th:text="${pelicula.estrena}">Estrena</td>
-                    <td class="table-actions">  
-                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">Veure</a>
-                        <a th:href="@{/pelicula/edit/{id}(id=${pelicula.id})}">Editar</a>
-                        <a th:href="@{/pelicula/delete/{id}(id=${pelicula.id})}" class="text-danger">Esborrar</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="table-section">
+
+        <div class="empty-state" th:if="${#lists.isEmpty(llista)}">
+            <div class="empty-state__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke="currentColor">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M8 2v4M16 2v4M2 10h20"/>
+                </svg>
+            </div>
+            <p>No hi ha cap pel·lícula al catàleg encara.</p>
+            <a th:href="@{/pelicula/create}" class="btn btn--primary">Afegir la primera</a>
+        </div>
+
+        <div class="tbl-container" th:if="${not #lists.isEmpty(llista)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-titol">Títol</th>
+                        <th class="col-dur">Durada</th>
+                        <th class="col-estrena">Estrena</th>
+                        <th class="col-sinopsi col-hide-sm">Sinopsi</th>
+                        <th class="col-actions">Accions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pelicula : ${llista}">
+                        <td class="col-titol"   th:text="${pelicula.Titol}">Títol</td>
+                        <td class="col-dur"     th:text="${pelicula.Durada} + ' min'">120 min</td>
+                        <td class="col-estrena" th:text="${pelicula.estrena}">01/01/2026</td>
+                        <td class="col-sinopsi col-hide-sm" th:text="${pelicula.sinopsi}">Sinopsi...</td>
+                        <td class="col-actions">
+                            <a th:href="@{/pelicula/{id}(id=${pelicula.id})}"        class="action-btn">Veure</a>
+                            <a th:href="@{/pelicula/edit/{id}(id=${pelicula.id})}"   class="action-btn action-btn--edit">Editar</a>
+                            <a th:href="@{/pelicula/delete/{id}(id=${pelicula.id})}" class="action-btn action-btn--danger">Esborrar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     <footer>
-        <div class="footer__copy" style="text-align: center;">
-            <p>© 2026 Cinema Daw Administració.</p>
+        <div class="footer__inner">
+            <div class="footer__left">
+                <span class="logo">
+                    <span class="logo__dot"></span>
+                    CinemaDaw <span class="logo__badge">Admin</span>
+                </span>
+                <p>Panell de control d'administració.</p>
+            </div>
+            <div class="footer__links">
+                <a href="/">Tornar a la web</a>
+                <a href="/logout" class="btn btn--primary" style="padding:0.4rem 1rem;">Tancar Sessió</a>
+            </div>
+        </div>
+        <div class="footer__copy">
+            <p>© 2026 Cinema Daw. Tots els drets reservats.</p>
         </div>
     </footer>
+
 </body>
 </html>
