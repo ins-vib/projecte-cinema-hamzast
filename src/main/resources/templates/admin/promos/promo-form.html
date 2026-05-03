@@ -3,53 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title th:text="${editing == true} ? 'Editar Código' : 'Nuevo Código'">Código Promocional</title>
-  <style>
-    body { font-family: sans-serif; margin: 2rem; color: #111; max-width: 500px; }
-    h1 { margin-bottom: 1.5rem; }
-    label { display: block; font-weight: 600; margin-top: 1rem; margin-bottom: .3rem; font-size: .9rem; }
-    input, select { width: 100%; padding: .5rem .75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: .95rem; box-sizing: border-box; }
-    input[type="checkbox"] { width: auto; }
-    .actions { margin-top: 1.5rem; display: flex; gap: 1rem; }
-    .btn { padding: .5rem 1.2rem; border-radius: 6px; border: none; cursor: pointer; font-size: .9rem; text-decoration: none; }
-    .btn-primary { background: #1d4ed8; color: #fff; }
-    .btn-secondary { background: #6b7280; color: #fff; display: inline-block; }
-    .error { background: #fee2e2; color: #991b1b; padding: .75rem 1rem; border-radius: 6px; margin-bottom: 1rem; }
-    .hint { font-size: .8rem; color: #6b7280; margin-top: .2rem; }
-    .readonly-code { background: #f3f4f6; color: #374151; font-weight: 700; letter-spacing: .1em; }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/promo-form.css}">
 </head>
 <body>
-  <h1 th:text="${editing == true} ? 'Editar Código Promocional' : 'Nuevo Código Promocional'">Código</h1>
-
-  <div class="error" th:if="${error}" th:text="${error}"></div>
 
   <form th:action="${editing == true} ? @{/admin/promos/{id}/edit(id=${promo.id})} : @{/admin/promos/new}"
         method="post" th:object="${promo}">
 
-    <label for="code">Código</label>
-    <input id="code" type="text" th:field="*{code}"
-           th:class="${editing == true} ? 'readonly-code' : ''"
-           th:readonly="${editing == true}"
-           placeholder="Ej: VERANO20" maxlength="20" required />
-    <p class="hint" th:if="${editing != true}">Solo letras y números, sin espacios. Se guardará en mayúsculas.</p>
-    <p class="hint" th:if="${editing == true}">El código no se puede cambiar una vez creado.</p>
+    <h1 th:text="${editing == true} ? 'Editar Código Promocional' : 'Nuevo Código Promocional'">Código</h1>
 
-    <label for="discountPercent">Descuento (%)</label>
-    <input id="discountPercent" type="number" th:field="*{discountPercent}"
-           min="1" max="100" required placeholder="Ej: 15" />
+    <div class="error" th:if="${error}" th:text="${error}"></div>
 
-    <label for="validFrom">Válido desde</label>
-    <input id="validFrom" type="date" th:field="*{validFrom}" required />
+    <div class="field">
+      <label for="code">Código</label>
+      <input id="code" type="text" th:field="*{code}"
+             th:class="${editing == true} ? 'readonly-code' : ''"
+             th:readonly="${editing == true}"
+             placeholder="Ej: VERANO20" maxlength="20" required />
+      <span class="hint" th:if="${editing != true}">Solo letras y números, sin espacios. Se guardará en mayúsculas.</span>
+      <span class="hint" th:if="${editing == true}">El código no se puede cambiar una vez creado.</span>
+    </div>
 
-    <label for="validUntil">Válido hasta</label>
-    <input id="validUntil" type="date" th:field="*{validUntil}" required />
+    <div class="field">
+      <label for="discountPercent">Descuento (%)</label>
+      <input id="discountPercent" type="number" th:field="*{discountPercent}"
+             min="1" max="100" required placeholder="Ej: 15" />
+    </div>
 
-    <label for="maxUses">Número máximo de usos (total)</label>
-    <input id="maxUses" type="number" th:field="*{maxUses}" min="1" required placeholder="Ej: 100" />
-    <p class="hint">Cuántas veces en total puede usarse este código entre todos los usuarios.</p>
+    <div class="field">
+      <label for="validFrom">Válido desde</label>
+      <input id="validFrom" type="date" th:field="*{validFrom}" required />
+    </div>
 
-    <div th:if="${editing == true}" style="margin-top:1rem;">
-      <label>
+    <div class="field">
+      <label for="validUntil">Válido hasta</label>
+      <input id="validUntil" type="date" th:field="*{validUntil}" required />
+    </div>
+
+    <div class="field">
+      <label for="maxUses">Número máximo de usos (total)</label>
+      <input id="maxUses" type="number" th:field="*{maxUses}" min="1" required placeholder="Ej: 100" />
+      <span class="hint">Cuántas veces en total puede usarse este código entre todos los usuarios.</span>
+    </div>
+
+    <div th:if="${editing == true}">
+      <label class="checkbox-label">
         <input type="checkbox" th:field="*{active}" />
         Activo
       </label>
@@ -60,6 +58,8 @@
               th:text="${editing == true} ? 'Guardar cambios' : 'Crear código'">Guardar</button>
       <a th:href="@{/admin/promos}" class="btn btn-secondary">Cancelar</a>
     </div>
+
   </form>
+
 </body>
 </html>

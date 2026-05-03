@@ -1,0 +1,282 @@
+/* ===========================
+   CinemaDaw — Promo Form
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --border:       #2a2a3a;
+  --border-focus: #c9a84c;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --placeholder:  #3e3e50;
+  --danger:       #c94c4c;
+  --danger-bg:    rgba(201,76,76,.1);
+  --radius:       4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ---------- Form card ---------- */
+form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 2.6rem 2.4rem 2.4rem;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: 0 8px 48px rgba(0,0,0,.55);
+}
+
+/* ---------- Legend / h1 ---------- */
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+  position: relative;
+  padding-bottom: .5rem;
+  margin-bottom: .4rem;
+}
+
+h1::before {
+  content: '🎟️';
+  font-size: .45em;
+  vertical-align: middle;
+  margin-right: .4em;
+  filter: grayscale(.4);
+}
+
+h1::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .4rem;
+}
+
+/* ---------- Error ---------- */
+.error {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius);
+  color: var(--danger);
+  padding: .75rem 1rem;
+  font-size: .95rem;
+  font-weight: 300;
+}
+
+/* ---------- Field wrapper ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+/* ---------- Labels ---------- */
+label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+}
+
+/* ---------- Inputs ---------- */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  padding: .65rem .9rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(.5) sepia(1) saturate(3) hue-rotate(5deg);
+  opacity: .6;
+  cursor: pointer;
+}
+
+input::placeholder { color: var(--placeholder); font-style: italic; }
+
+input:focus,
+select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(201,168,76,.12);
+}
+
+/* ---------- Readonly code ---------- */
+.readonly-code {
+  background: rgba(201,168,76,.06);
+  border-color: var(--gold-dim);
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: .18em;
+  cursor: not-allowed;
+}
+
+/* ---------- Select ---------- */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  cursor: pointer;
+}
+
+select option { background: var(--surface); color: var(--text); }
+
+/* ---------- Checkbox ---------- */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color .2s, background .2s;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 5px;
+  width: 4px; height: 8px;
+  border: 2px solid var(--bg);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+/* ---------- Hint ---------- */
+.hint {
+  font-size: .82rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ---------- Actions ---------- */
+.actions {
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+  margin-top: .4rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: .6rem 1.8rem;
+  border-radius: var(--radius);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .95rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .2s, color .2s, transform .15s;
+}
+
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: transparent;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn-primary:hover {
+  background: var(--gold);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn-secondary:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  form { padding: 2rem 1.4rem; }
+  .actions { flex-direction: column; }
+  .btn { text-align: center; }
+}

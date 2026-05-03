@@ -1,25 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editar sala</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Sala — CinemaDaw</title>
+    <link rel="stylesheet" th:href="@{/css/room-crear.css}">
 </head>
 <body>
-  <form th:action="@{/room/editar}" th:object="${room}" method="post">
-    <legend>Editar sala</legend>
 
+    <header>
+        <div class="logo">
+            <span class="logo__dot"></span>
+            CinemaDaw
+            <span class="logo__badge">Admin</span>
+        </div>
+        <nav>
+            <a href="/cinemes" class="nav__link nav__link--active">Cinemes</a>
+            <a href="/pelicula" class="nav__link">Pel·lícules</a>
+            <a href="/screenings/all" class="nav__link">Sessions</a>
+        </nav>
+    </header>
+
+    <main>
+        <form th:action="@{/room/new}" th:object="${room}" method="post">
+
+            <input type="hidden" th:field="*{cinema.id}" />
+
+            <legend>🎬 Editar Sala</legend>
     <input type="hidden" th:field="*{id}" />
-    <input type="hidden" th:field="*{cinema.id}" />
 
-    <label>Titol:</label>
-    <input type="text" th:field="*{name}" />
+            <div class="field">
+                <label>Nom de la sala</label>
+                <input type="text" th:field="*{name}" placeholder="Ex: Sala 1, IMAX..." />
+            </div>
 
-    <label>Capacity:</label>
-    <input type="text" th:field="*{capacity}" />
+            <div class="field">
+                <label>Capacitat</label>
+                <input type="text" th:field="*{capacity}" placeholder="Ex: 120" />
+            </div>
 
-    <button type="submit">Guardar</button>
-  </form>
+            <div class="form__actions">
+                <button type="submit" class="btn btn--primary">Guardar</button>
+                <a href="/cinemes" class="btn btn--outline">Cancel·lar</a>
+            </div>
+
+        </form>
+    </main>
+
+    <footer>
+        <div class="footer__inner">
+            <span class="footer__copy">© 2026 CinemaDaw</span>
+            <a href="/logout" class="btn btn--outline btn--sm">Tancar Sessió</a>
+        </div>
+    </footer>
+
 </body>
 </html>

@@ -1,8 +1,8 @@
 package com.daw.CinemaDaw.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Comparator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +34,12 @@ public class ScreeningController {
     }
 
     // Totes les sessions
-   @GetMapping("/screenings/all")
+    @GetMapping("screenings/all")
     public String todasScreenings(Model model) {
-    model.addAttribute("screenings", screeningRepository.findAll());
-    model.addAttribute("pelicules", peliculaRepository.findAll());
-    return "/screenings/screenings-all";
-}
+        model.addAttribute("screenings", screeningRepository.findAll());
+        model.addAttribute("pelicules", peliculaRepository.findAll());
+        return "screenings/screenings-all";
+    }
 
     // Sessions d'una pel·licula
     @GetMapping("/screenings/movie/{movieId}")
@@ -57,7 +57,7 @@ public class ScreeningController {
 
         model.addAttribute("movie", optionalMovie.get());
         model.addAttribute("screenings", screenings);
-        return "/screenings/screenings-bymovies";
+        return "screenings/screenings-bymovies";
     }
 
     // Llista de projeccions d'una sala
@@ -68,7 +68,7 @@ public class ScreeningController {
         List<Screening> screenings = screeningRepository.findByRoom_Id(roomId);
         model.addAttribute("room", optional.get());
         model.addAttribute("screenings", screenings);
-        return "/screenings/screening-llista";
+        return "screenings/screening-llista";
     }
 
     // Detall d'una projecció
@@ -77,7 +77,7 @@ public class ScreeningController {
         Optional<Screening> optional = screeningRepository.findById(id);
         if (optional.isEmpty()) return "redirect:/cinemes";
         model.addAttribute("screening", optional.get());
-        return "/screenings/screening-detail";
+        return "screenings/screening-detail";
     }
 
     // Formulari crear projecció
@@ -90,7 +90,7 @@ public class ScreeningController {
         screening.setMovie(new pelicula());
         model.addAttribute("screening", screening);
         model.addAttribute("pelicules", peliculaRepository.findAll());
-        return "/screenings/screening-crear";
+        return "screenings/screening-crear";
     }
 
     // Guardar nova projecció
@@ -123,7 +123,7 @@ public class ScreeningController {
         if (optional.isPresent()) {
             model.addAttribute("screening", optional.get());
             model.addAttribute("pelicules", peliculaRepository.findAll());
-            return "/screenings/screening-edit";
+            return "screenings/screening-edit";
         }
         return "redirect:/cinemes";
     }

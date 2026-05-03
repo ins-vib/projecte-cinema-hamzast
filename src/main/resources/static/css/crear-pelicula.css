@@ -1,24 +1,22 @@
 /* ===========================
-   CinemaDaw — Crear / Editar
+   CinemaDaw — Crear Pel·lícula
    =========================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
 
-/* ---------- Variables ---------- */
 :root {
-  --bg:         #0a0a0f;
-  --surface:    #111118;
-  --border:     #2a2a3a;
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --border:       #2a2a3a;
   --border-focus: #c9a84c;
-  --gold:       #c9a84c;
-  --gold-dim:   #7a612a;
-  --text:       #e8e4d9;
-  --text-muted: #7a7870;
-  --placeholder:#3e3e50;
-  --radius:     4px;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --placeholder:  #3e3e50;
+  --radius:       4px;
 }
 
-/* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -26,10 +24,8 @@ body {
   background-image:
     radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
     repeating-linear-gradient(
-      0deg,
-      transparent, transparent 3px,
-      rgba(255,255,255,.012) 3px,
-      rgba(255,255,255,.012) 4px
+      0deg, transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px, rgba(255,255,255,.012) 4px
     );
   color: var(--text);
   font-family: 'Crimson Pro', Georgia, serif;
@@ -40,7 +36,6 @@ body {
   padding: 3rem 1.5rem;
 }
 
-/* ---------- Form card ---------- */
 form {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -48,14 +43,12 @@ form {
   border-radius: var(--radius);
   padding: 2.6rem 2.4rem 2.4rem;
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
   box-shadow: 0 8px 48px rgba(0,0,0,.55);
 }
 
-/* ---------- Legend ---------- */
 legend {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2rem;
@@ -63,9 +56,9 @@ legend {
   text-transform: uppercase;
   color: var(--text);
   line-height: 1;
-  position: relative;
+  margin-bottom: 1.8rem;
   padding-bottom: .5rem;
-  margin-bottom: .4rem;
+  position: relative;
 }
 
 legend::before {
@@ -82,26 +75,20 @@ legend::after {
   height: 2px;
   background: linear-gradient(90deg, var(--gold), transparent);
   margin-top: .4rem;
-  width: 100%;
 }
 
-/* ---------- Field groups ---------- */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
-}
-
-/* Wrap each label+input pair — since the HTML uses <br> we target directly */
 label {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: .82rem;
-  letter-spacing: .14em;
+  font-size: .8rem;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gold);
   display: block;
-  margin-bottom: .25rem;
+  margin-top: 1.1rem;
+  margin-bottom: .3rem;
 }
+
+label:first-of-type { margin-top: 0; }
 
 input[type="text"] {
   width: 100%;
@@ -115,7 +102,6 @@ input[type="text"] {
   padding: .65rem .9rem;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
-  margin-bottom: .8rem; /* compensate for <br> removal visually */
 }
 
 input[type="text"]::placeholder {
@@ -128,9 +114,8 @@ input[type="text"]:focus {
   box-shadow: 0 0 0 3px rgba(201,168,76,.12);
 }
 
-/* ---------- Submit button ---------- */
 button[type="submit"] {
-  align-self: flex-start;
+  margin-top: 1.8rem;
   padding: .6rem 2rem;
   background: transparent;
   border: 1px solid var(--gold);
@@ -141,8 +126,8 @@ button[type="submit"] {
   letter-spacing: .12em;
   text-transform: uppercase;
   cursor: pointer;
+  align-self: flex-start;
   transition: background .2s, color .2s, transform .15s;
-  margin-top: .4rem;
 }
 
 button[type="submit"]:hover {
@@ -151,17 +136,13 @@ button[type="submit"]:hover {
   transform: translateY(-1px);
 }
 
-button[type="submit"]:active {
-  transform: translateY(0);
-}
+button[type="submit"]:active { transform: translateY(0); }
 
-/* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 480px) {
   form { padding: 2rem 1.4rem; }
-  button[type="submit"] { width: 100%; justify-content: center; }
+  button[type="submit"] { width: 100%; text-align: center; }
 }

@@ -1,23 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
     <meta charset="UTF-8">
     <title>Detall Projecció</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/screening-detail.css}">
 </head>
 <body>
 
-<h1>Projecció #<span th:text="${screening.id}"></span></h1>
+<div class="card">
 
-<ul>
-    <li>Pel·lícula: <span th:text="${screening.movie.Titol}"></span></li>
-    <li>Sala: <span th:text="${screening.room.name}"></span></li>
-    <li>Data: <span th:text="${screening.screeningDate}"></span></li>
-    <li>Hora: <span th:text="${screening.screeningTime}"></span></li>
-    <li>Preu: <span th:text="${screening.price}"></span> €</li>
-</ul>
+    <!-- Header -->
+    <div class="card-header">
+        <span class="card-eyebrow">🎬 Detall de projecció</span>
+        <h1 class="card-title">Sessió <span th:text="'#' + ${screening.id}"></span></h1>
+    </div>
 
+    <!-- Movie highlighted -->
+    <div class="movie-title">
+        <span class="movie-title__label">Pel·lícula</span>
+        <span class="movie-title__value" th:text="${screening.movie.Titol}"></span>
+    </div>
 
+    <!-- Detail rows -->
+    <div class="details">
+        <div class="detail-row">
+            <span class="detail-label">Sala</span>
+            <span class="detail-value" th:text="${screening.room.name}"></span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Data</span>
+            <span class="detail-value" th:text="${screening.screeningDate}"></span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Hora</span>
+            <span class="detail-value" th:text="${screening.screeningTime}"></span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Preu</span>
+            <span class="detail-value detail-value--price" th:text="${screening.price} + ' €'"></span>
+        </div>
+    </div>
+
+    <!-- Footer actions -->
+    <div class="card-footer">
+        <a class="btn btn--edit"
+           th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
+        <a class="btn btn--back"
+           th:href="@{/screening/llista/{roomId}(roomId=${screening.room.id})}">← Tornar a la sala</a>
+    </div>
+
+</div>
 
 </body>
 </html>

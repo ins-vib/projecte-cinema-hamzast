@@ -1,0 +1,216 @@
+/* ===========================
+   CinemaDaw — Detall Projecció
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --surface-alt:  #13131c;
+  --border:       #2a2a3a;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --radius:       4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 520px;
+  box-shadow: 0 8px 48px rgba(0,0,0,.55);
+  overflow: hidden;
+}
+
+/* ---------- Card header ---------- */
+.card-header {
+  padding: 2rem 2.4rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.card-eyebrow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  display: block;
+  margin-bottom: .4rem;
+}
+
+.card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+}
+
+.card-title span {
+  color: var(--gold);
+}
+
+.card-title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .6rem;
+}
+
+/* ---------- Movie title highlight ---------- */
+.movie-title {
+  padding: 1.4rem 2.4rem;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.movie-title__label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: .3rem;
+}
+
+.movie-title__value {
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+/* ---------- Detail rows ---------- */
+.details {
+  padding: 1.4rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.detail-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.detail-row:last-child { border-bottom: none; }
+
+.detail-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.detail-value {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text);
+  text-align: right;
+}
+
+.detail-value--price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: .06em;
+  color: var(--gold);
+}
+
+/* ---------- Card footer (actions) ---------- */
+.card-footer {
+  padding: 1.4rem 2.4rem;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: .8rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: .55rem 1.6rem;
+  border-radius: var(--radius);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .15s;
+  border: 1px solid transparent;
+}
+
+.btn:active { transform: translateY(0); }
+
+.btn--edit {
+  background: transparent;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn--edit:hover {
+  background: var(--gold);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.btn--back {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.btn--back:hover {
+  border-color: var(--text-muted);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  body { padding: 1.5rem 1rem; align-items: flex-start; }
+  .card-header, .movie-title, .details, .card-footer { padding-left: 1.4rem; padding-right: 1.4rem; }
+  .card-footer { flex-direction: column; }
+  .btn { text-align: center; }
+}

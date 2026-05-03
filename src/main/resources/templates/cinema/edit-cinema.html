@@ -10,6 +10,8 @@
     <form th:action="@{/cinema/edit}" th:object="${cinema}" method="post">
       <legend>Nuevo cine</legend>
 
+      <input type="hidden" th:field="*{id}" />
+
       <label for="nombre">Name:</label>
       <input type="text" th:field="*{name}" /><br /><br />
       <label for="nombre">Address:</label>
@@ -21,5 +23,6 @@
 
       <button type="submit">Guardar</button>
     </form>
+    
   </body>
 </html>

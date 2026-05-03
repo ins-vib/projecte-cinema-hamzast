@@ -1,0 +1,274 @@
+/* ===========================
+   CinemaDaw — Projeccions
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+/* ---------- Variables ---------- */
+:root {
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --surface-hover:#16161f;
+  --border:       #2a2a3a;
+  --border-focus: #c9a84c;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --placeholder:  #3e3e50;
+  --danger:       #c94c4c;
+  --danger-dim:   #7a2a2a;
+  --radius:       4px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+/* ---------- Page wrapper ---------- */
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---------- Header ---------- */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.2rem;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+  position: relative;
+}
+
+.page-title::before {
+  content: '🎬';
+  font-size: .42em;
+  vertical-align: middle;
+  margin-right: .4em;
+  filter: grayscale(.4);
+}
+
+.page-title span {
+  color: var(--gold);
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .4rem;
+  width: 100%;
+}
+
+/* ---------- Button link (Crear) ---------- */
+.btn {
+  display: inline-block;
+  padding: .5rem 1.6rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .95rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, color .2s, transform .15s;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--gold);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.btn:active { transform: translateY(0); }
+
+/* ---------- Table card ---------- */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,.55);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ---------- Table head ---------- */
+thead tr {
+  background: rgba(201,168,76,.06);
+  border-bottom: 1px solid var(--border);
+}
+
+thead th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: .85rem 1.1rem;
+  text-align: left;
+  font-weight: 400;
+}
+
+/* ---------- Table body ---------- */
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+
+tbody tr:hover { background: var(--surface-hover); }
+
+tbody td {
+  padding: .8rem 1.1rem;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+/* Movie title column — a bit more weight */
+tbody td:first-child {
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Price column */
+tbody td:nth-child(4)::after {
+  content: ' €';
+  color: var(--gold-dim);
+  font-size: .85em;
+}
+
+/* ---------- Action links ---------- */
+.actions {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .3rem .8rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition: background .2s, color .2s, border-color .2s;
+}
+
+/* Veure detall */
+.action-link--view {
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+.action-link--view:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+/* Editar */
+.action-link--edit {
+  color: var(--gold);
+  border-color: var(--gold-dim);
+}
+.action-link--edit:hover {
+  background: rgba(201,168,76,.12);
+  border-color: var(--gold);
+}
+
+/* Esborrar */
+.action-link--delete {
+  color: var(--danger);
+  border-color: var(--danger-dim);
+}
+.action-link--delete:hover {
+  background: rgba(201,76,76,.12);
+  border-color: var(--danger);
+}
+
+/* ---------- Empty state ---------- */
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+/* ---------- Back link ---------- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  color: var(--text-muted);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.back-link::before { content: '←'; font-size: 1em; }
+
+.back-link:hover { color: var(--gold); }
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 640px) {
+  body { padding: 1.5rem 1rem; }
+
+  .page-header { flex-direction: column; align-items: flex-start; }
+
+  thead th, tbody td { padding: .65rem .7rem; font-size: .9rem; }
+
+  .action-link { font-size: .7rem; padding: .25rem .6rem; }
+}

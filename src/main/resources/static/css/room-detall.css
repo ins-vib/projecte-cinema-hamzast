@@ -1,0 +1,285 @@
+/* ===========================
+   CinemaDaw — Detall Sala
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+:root {
+  --bg:         #0a0a0f;
+  --surface:    #111118;
+  --surface2:   #16161f;
+  --border:     #2a2a3a;
+  --gold:       #c9a84c;
+  --gold-dim:   #7a612a;
+  --blue:       #5dade2;
+  --red:        #e74c3c;
+  --purple:     #a569bd;
+  --green:      #52be80;
+  --text:       #e8e4d9;
+  --text-muted: #7a7870;
+  --radius:     4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -5%, rgba(201,168,76,.09), transparent),
+    repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px, rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Header ---------- */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,10,15,.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: .12em;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: .5em;
+}
+
+.logo__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px var(--gold);
+  display: inline-block;
+}
+
+.logo__badge {
+  font-size: .55em;
+  letter-spacing: .18em;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+
+nav { display: flex; gap: .3rem; }
+
+.nav__link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .82rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: .35rem .75rem;
+  border-radius: var(--radius);
+  transition: color .18s, background .18s;
+}
+
+.nav__link:hover { color: var(--text); background: var(--surface2); }
+.nav__link--active { color: var(--gold); background: rgba(201,168,76,.08); }
+
+/* ---------- Main ---------- */
+main {
+  flex: 1;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 4rem;
+}
+
+/* ---------- Back ---------- */
+.back { margin-bottom: 2rem; }
+
+.back__link {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .82rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color .18s;
+}
+
+.back__link:hover { color: var(--gold); }
+
+/* ---------- Card ---------- */
+.detall {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 2.4rem;
+  box-shadow: 0 8px 48px rgba(0,0,0,.45);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---------- Header block ---------- */
+.detall__header { display: flex; flex-direction: column; gap: .4rem; }
+
+.detall__badge {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .75rem;
+  letter-spacing: .22em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.detall__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text);
+  position: relative;
+  display: inline-block;
+}
+
+.detall__title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .3rem;
+}
+
+/* ---------- Meta ---------- */
+.detall__meta {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.meta__item { display: flex; flex-direction: column; gap: .3rem; }
+
+.meta__label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .75rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.meta__value {
+  font-size: 1.08rem;
+  font-weight: 300;
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ---------- Actions ---------- */
+.detall__actions {
+  display: flex;
+  gap: .7rem;
+  flex-wrap: wrap;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .85rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: .5rem 1.3rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity .18s, transform .15s;
+}
+
+.btn:hover { opacity: .82; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--edit {
+  background: rgba(93,173,226,.10);
+  color: var(--blue);
+  border-color: rgba(93,173,226,.28);
+}
+
+.btn--danger {
+  background: rgba(231,76,60,.10);
+  color: var(--red);
+  border-color: rgba(231,76,60,.28);
+}
+
+.btn--purple {
+  background: rgba(165,105,189,.10);
+  color: var(--purple);
+  border-color: rgba(165,105,189,.28);
+}
+
+.btn--green {
+  background: rgba(82,190,128,.10);
+  color: var(--green);
+  border-color: rgba(82,190,128,.28);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+  font-size: .78rem;
+  padding: .35rem 1rem;
+}
+
+.btn--outline:hover { color: var(--gold); border-color: var(--gold-dim); opacity: 1; }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.2rem 2.5rem;
+}
+
+.footer__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer__copy {
+  font-size: .85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  header { padding: .9rem 1.2rem; }
+  main { padding: 1.8rem 1.2rem 3rem; }
+  .detall { padding: 1.6rem 1.4rem; }
+  .detall__meta { gap: 1.5rem; }
+  .detall__actions { flex-direction: column; }
+  nav { display: none; }
+}

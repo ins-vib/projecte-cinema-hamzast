@@ -1,75 +1,56 @@
-<!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title th:text="${movie.Titol} + ' - Sesiones'">Sesiones</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}" />
-  <link rel="stylesheet" th:href="@{/css/screenings-bymovies.css}" />
+    <meta charset="UTF-8">
+    <title>Sessions per Pel·lícula</title>
+    <link rel="stylesheet" th:href="@{/css/screenings-all.css}">
 </head>
-<body class="screenings-page">
+<body>
 
-  <main class="page">
-    <div class="screenings-header">
-      <div class="screenings-header__text">
-        <span class="eyebrow">SESIONES</span>
-        <h1 th:text="${movie.Titol}">Película</h1>
-      </div>
-      <div class="screenings-header__actions">
-        <a class="sc-btn sc-btn--detail" th:href="@{/screenings/all}">Volver</a>
-      </div>
+<div class="page">
+
+    <div class="page-header">
+        <h1 class="page-title" th:text="${movie.Titol}">Pel·lícula</h1>
+        <a class="back-link" href="/screenings/all">← Tornar</a>
     </div>
 
-    <section class="movie-strip">
-      <h2 class="movie-strip__title" th:text="${movie.Titol}">Película</h2>
-      <div class="movie-strip__meta">
-        <span th:text="${movie.Durada} + ' min'">120 min</span>
-        <span>|</span>
-        <span th:text="${movie.estrena}">2026-01-01</span>
-      </div>
-      <p class="movie-strip__synopsis" th:text="${movie.sinopsi}">
-        Sinopsis de la película.
-      </p>
-    </section>
-
-    <div class="screenings-grid" th:if="${not #lists.isEmpty(screenings)}">
-      <article class="screening-card" th:each="screening : ${screenings}">
-        <div class="screening-card__date">
-          <span class="screening-card__day"
-                th:text="${#temporals.format(screening.screeningDate, 'dd')}">01</span>
-          <span class="screening-card__month"
-                th:text="${#temporals.format(screening.screeningDate, 'MMM')}">ENE</span>
-        </div>
-
-        <div class="screening-card__info">
-          <div class="screening-card__movie"
-               th:text="${#temporals.format(screening.screeningDate, 'EEEE')}">Lunes</div>
-          <div class="screening-card__meta">
-            <span th:text="${screening.room.name}">Sala</span>
-            <span>|</span>
-            <span th:text="${#temporals.format(screening.screeningTime, 'HH:mm')}">20:00</span>
-            <span>|</span>
-            <span th:text="${screening.price} + ' €'">0 €</span>
-          </div>
-        </div>
-
-        <div class="screening-card__actions">
-          <a class="sc-btn sc-btn--detail"
-             th:href="@{/screening/{id}(id=${screening.id})}">Ver detalles</a>
-          <a class="sc-btn sc-btn--edit"
-             th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
-          <a class="sc-btn sc-btn--delete"
-             th:href="@{/screening/delete/{id}(id=${screening.id})}"
-             onclick="return confirm('¿Eliminar esta sesión?')">Borrar</a>
-        </div>
-      </article>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sala</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Preu</th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(screenings)}">
+                    <td colspan="5" class="empty">Cap sessió per aquesta pel·lícula.</td>
+                </tr>
+                <tr th:each="screening : ${screenings}">
+                    <td th:text="${screening.room.name}"></td>
+                    <td th:text="${screening.screeningDate}"></td>
+                    <td th:text="${screening.screeningTime}"></td>
+                    <td th:text="${screening.price}"></td>
+                    <td>
+                        <div class="actions">
+                            <a class="action-link action-link--view"
+                               th:href="@{/screening/{id}(id=${screening.id})}">Veure</a>
+                            <a class="action-link action-link--edit"
+                               th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
+                            <a class="action-link action-link--delete"
+                               th:href="@{/screening/delete/{id}(id=${screening.id})}"
+                               onclick="return confirm('Esborrar aquesta sessió?')">Esborrar</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="screenings-empty" th:if="${#lists.isEmpty(screenings)}">
-      <p>No hay sesiones programadas para esta película.</p>
-      <a class="sc-btn sc-btn--detail" th:href="@{/screenings/all}">Volver al listado</a>
-    </div>
-  </main>
+</div>
 
 </body>
 </html>

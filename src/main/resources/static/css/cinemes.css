@@ -1,0 +1,239 @@
+/* ===========================
+   CinemaDaw — Cinematic Dark
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+
+/* ---------- Variables ---------- */
+:root {
+  --bg:         #0a0a0f;
+  --surface:    #111118;
+  --border:     #2a2a3a;
+  --gold:       #c9a84c;
+  --gold-dim:   #7a612a;
+  --red:        #c0392b;
+  --text:       #e8e4d9;
+  --text-muted: #7a7870;
+  --row-hover:  #16161f;
+  --radius:     4px;
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.12), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  padding: 3rem 2rem 5rem;
+}
+
+/* ---------- Header ---------- */
+h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 2.8rem;
+}
+
+h1::before {
+  content: '🎬';
+  font-size: .45em;
+  vertical-align: middle;
+  margin-right: .4em;
+  filter: grayscale(.4);
+}
+
+h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .35rem;
+  width: 100%;
+}
+
+/* ---------- Create button (anchor styled as pill) ---------- */
+a[href*="create"] {
+  display: inline-flex;
+  align-items: center;
+  gap: .45em;
+  padding: .5rem 1.4rem;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-bottom: 1.8rem;
+  transition: background .2s, color .2s;
+  position: relative;
+  overflow: hidden;
+}
+
+a[href*="create"]::before {
+  content: '+';
+  font-size: 1.1em;
+}
+
+a[href*="create"]:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+/* ---------- Table wrapper ---------- */
+table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  border-top: 1px solid var(--border);
+  margin-top: .5rem;
+}
+
+/* ---------- Header row ---------- */
+thead tr {
+  border-bottom: 1px solid var(--gold-dim);
+}
+
+thead th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .85rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: left;
+  padding: .85rem 1.1rem;
+  font-weight: 400;
+}
+
+/* ---------- Body rows ---------- */
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .18s;
+}
+
+tbody tr:hover {
+  background: var(--row-hover);
+}
+
+tbody td {
+  padding: .95rem 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+/* Cinema name — slightly larger */
+tbody td:first-child {
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #f0ece2;
+}
+
+/* City column */
+tbody td:nth-child(2) {
+  color: var(--text-muted);
+  font-size: .97rem;
+  letter-spacing: .03em;
+}
+
+/* Actions column */
+tbody td:last-child {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+}
+
+/* ---------- Action links ---------- */
+tbody td a {
+  display: inline-block;
+  padding: .3rem .75rem;
+  border-radius: var(--radius);
+  font-size: .8rem;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: .09em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity .18s, transform .15s;
+}
+
+tbody td a:hover {
+  opacity: .85;
+  transform: translateY(-1px);
+}
+
+/* "Veure detall" */
+tbody td a[href*="cinema/"]:not([href*="delete"]):not([href*="edit"]) {
+  background: rgba(201,168,76,.12);
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+}
+
+/* "Editar" */
+tbody td a[href*="edit"] {
+  background: rgba(52,152,219,.12);
+  color: #5dade2;
+  border: 1px solid rgba(52,152,219,.3);
+}
+
+/* "Esborrar" */
+tbody td a[href*="delete"] {
+  background: rgba(192,57,43,.12);
+  color: #e74c3c;
+  border: 1px solid rgba(192,57,43,.3);
+}
+
+/* ---------- Scrollbar (webkit) ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+  body { padding: 2rem 1rem 4rem; }
+
+  tbody td:last-child {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .4rem;
+  }
+}
+
+/* ---------- Back link ---------- */
+a[href="/admin"] {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  margin-top: 2.8rem;
+  color: var(--text-muted);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s;
+  color: rgb(98, 0, 255);
+}

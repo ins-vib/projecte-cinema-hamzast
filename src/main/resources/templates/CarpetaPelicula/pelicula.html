@@ -67,7 +67,7 @@
                         <td class="col-estrena" th:text="${pelicula.estrena}">01/01/2026</td>
                         <td class="col-sinopsi col-hide-sm" th:text="${pelicula.sinopsi}">Sinopsi...</td>
                         <td class="col-actions">
-                            <a th:href="@{/pelicula/{id}(id=${pelicula.id})}"        class="action-btn">Veure</a>
+                            <a th:href="@{/pelicula/{id}(id=${pelicula.id})}"        class="action-btn">Veure detall</a>
                             <a th:href="@{/pelicula/edit/{id}(id=${pelicula.id})}"   class="action-btn action-btn--edit">Editar</a>
                             <a th:href="@{/pelicula/delete/{id}(id=${pelicula.id})}" class="action-btn action-btn--danger">Esborrar</a>
                         </td>
@@ -88,7 +88,7 @@
                 <p>Panell de control d'administració.</p>
             </div>
             <div class="footer__links">
-                <a href="/">Tornar a la web</a>
+                <a href="/admin">Tornar a la web</a>
                 <a href="/logout" class="btn btn--primary" style="padding:0.4rem 1rem;">Tancar Sessió</a>
             </div>
         </div>

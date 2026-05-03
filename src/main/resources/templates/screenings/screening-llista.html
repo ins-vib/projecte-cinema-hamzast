@@ -3,40 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Projeccions</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/screening-llista.css}">
 </head>
 <body>
 
-<h1>Projeccions - <span th:text="${room.name}"></span></h1>
+<div class="page">
 
-<a th:href="@{/screening/create/{roomId}(roomId=${room.id})}">Crear</a>
+    <!-- Header -->
+    <div class="page-header">
+        <h1 class="page-title">
+            Projeccions — <span th:text="${room.name}"></span>
+        </h1>
+        <a class="btn" th:href="@{/screening/create/{roomId}(roomId=${room.id})}">+ Crear</a>
+    </div>
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>Pel·lícula</th>
-            <th>Data</th>
-            <th>Hora</th>
-            <th>Preu</th>
-            <th>Accions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="screening : ${screenings}">
-            <td th:text="${screening.movie.Titol}"></td>
-            <td th:text="${screening.screeningDate}"></td>
-            <td th:text="${screening.screeningTime}"></td>
-            <td th:text="${screening.price}"></td>
-            <td>
-                <a th:href="@{/screening/{id}(id=${screening.id})}">Veure detall</a>
-                <a th:href="@{/screening/delete/{id}(id=${screening.id})}">Esborrar</a>
-                <a th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <!-- Table -->
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pel·lícula</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Preu</th>
+                    <th>Accions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${screenings.empty}">
+                    <td colspan="5" class="empty">Cap projecció registrada.</td>
+                </tr>
+                <tr th:each="screening : ${screenings}">
+                    <td th:text="${screening.movie.Titol}"></td>
+                    <td th:text="${screening.screeningDate}"></td>
+                    <td th:text="${screening.screeningTime}"></td>
+                    <td th:text="${screening.price}"></td>
+                    <td>
+                        <div class="actions">
+                            <a class="action-link action-link--view"
+                               th:href="@{/screening/{id}(id=${screening.id})}">Veure</a>
+                            <a class="action-link action-link--edit"
+                               th:href="@{/screening/edit/{id}(id=${screening.id})}">Editar</a>
+                            <a class="action-link action-link--delete"
+                               th:href="@{/screening/delete/{id}(id=${screening.id})}">Esborrar</a>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<a th:href="@{/room/{id}(id=${room.id})}">Tornar a la sala</a>
+    <!-- Back -->
+    <a class="back-link" th:href="@{/room/{id}(id=${room.id})}">Tornar a la sala</a>
+
+</div>
 
 </body>
 </html>

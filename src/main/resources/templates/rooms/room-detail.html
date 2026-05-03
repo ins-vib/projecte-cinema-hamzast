@@ -1,19 +1,71 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ca">
 <head>
     <meta charset="UTF-8">
-    <title>Detall Sala</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${room.name} + ' — CinemaDaw'">Detall Sala</title>
+    <link rel="stylesheet" th:href="@{/css/room-detall.css}">
 </head>
 <body>
 
-<h1 th:text="${room.name}"></h1>
-<p>Capacitat: <span th:text="${room.capacity}"></span></p>
-<p>Cinema: <span th:text="${room.cinema.name}"></span></p>
-<p>Ciutat: <span th:text="${room.cinema.city}"></span></p>
+    <header>
+        <div class="logo">
+            <span class="logo__dot"></span>
+            CinemaDaw
+            <span class="logo__badge">Admin</span>
+        </div>
+        <nav>
+            <a href="/cinemes" class="nav__link nav__link--active">Cinemes</a>
+            <a href="/pelicula" class="nav__link">Pel·lícules</a>
+            <a href="/screenings/all" class="nav__link">Sessions</a>
+        </nav>
+    </header>
 
+    <main>
 
-<a th:href="@{/cinema/{id}(id=${room.cinema.id})}">Tornar al cinema</a>
+        <div class="back">
+            <a th:href="@{/cinema/{id}(id=${room.cinema.id})}" class="back__link">← Tornar al cinema</a>
+        </div>
+
+        <article class="detall">
+
+            <div class="detall__header">
+                <div class="detall__badge">✦ Sala</div>
+                <h1 class="detall__title" th:text="${room.name}">Nom de la sala</h1>
+            </div>
+
+            <div class="detall__meta">
+                <div class="meta__item">
+                    <span class="meta__label">Capacitat</span>
+                    <span class="meta__value" th:text="${room.capacity} + ' seients'">— seients</span>
+                </div>
+                <div class="meta__item">
+                    <span class="meta__label">Cinema</span>
+                    <span class="meta__value" th:text="${room.cinema.name}">—</span>
+                </div>
+                <div class="meta__item">
+                    <span class="meta__label">Ciutat</span>
+                    <span class="meta__value" th:text="${room.cinema.city}">—</span>
+                </div>
+            </div>
+
+            <div class="detall__actions">
+                <a th:href="@{/room/edit/{id}(id=${room.id})}"   class="btn btn--edit">Editar</a>
+                <a th:href="@{/room/delete/{id}(id=${room.id})}" class="btn btn--danger">Esborrar</a>
+                <a th:href="@{/seat/llista/{roomId}(roomId=${room.id})}"      class="btn btn--purple">Seients</a>
+                <a th:href="@{/screening/llista/{roomId}(roomId=${room.id})}" class="btn btn--green">Projeccions</a>
+            </div>
+
+        </article>
+
+    </main>
+
+    <footer>
+        <div class="footer__inner">
+            <span class="footer__copy">© 2026 CinemaDaw</span>
+            <a href="/logout" class="btn btn--outline">Tancar Sessió</a>
+        </div>
+    </footer>
 
 </body>
 </html>

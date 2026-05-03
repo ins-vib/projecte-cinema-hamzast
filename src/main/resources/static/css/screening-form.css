@@ -1,21 +1,21 @@
 /* ===========================
-   CinemaDaw — Crear / Editar
+   CinemaDaw — Editar Projecció
    =========================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
 
 /* ---------- Variables ---------- */
 :root {
-  --bg:         #0a0a0f;
-  --surface:    #111118;
-  --border:     #2a2a3a;
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --border:       #2a2a3a;
   --border-focus: #c9a84c;
-  --gold:       #c9a84c;
-  --gold-dim:   #7a612a;
-  --text:       #e8e4d9;
-  --text-muted: #7a7870;
-  --placeholder:#3e3e50;
-  --radius:     4px;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --placeholder:  #3e3e50;
+  --radius:       4px;
 }
 
 /* ---------- Reset ---------- */
@@ -69,7 +69,7 @@ legend {
 }
 
 legend::before {
-  content: '🎬';
+  content: '🎞️';
   font-size: .45em;
   vertical-align: middle;
   margin-right: .4em;
@@ -85,14 +85,14 @@ legend::after {
   width: 100%;
 }
 
-/* ---------- Field groups ---------- */
+/* ---------- Field wrapper ---------- */
 .field {
   display: flex;
   flex-direction: column;
   gap: .4rem;
 }
 
-/* Wrap each label+input pair — since the HTML uses <br> we target directly */
+/* ---------- Labels ---------- */
 label {
   font-family: 'Bebas Neue', sans-serif;
   font-size: .82rem;
@@ -103,7 +103,11 @@ label {
   margin-bottom: .25rem;
 }
 
-input[type="text"] {
+/* ---------- Shared input base ---------- */
+input[type="date"],
+input[type="time"],
+input[type="number"],
+select {
   width: 100%;
   background: var(--bg);
   border: 1px solid var(--border);
@@ -115,17 +119,42 @@ input[type="text"] {
   padding: .65rem .9rem;
   outline: none;
   transition: border-color .2s, box-shadow .2s;
-  margin-bottom: .8rem; /* compensate for <br> removal visually */
 }
 
-input[type="text"]::placeholder {
-  color: var(--placeholder);
-  font-style: italic;
-}
-
-input[type="text"]:focus {
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="number"]:focus,
+select:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px rgba(201,168,76,.12);
+}
+
+/* ---------- Number — remove spinners ---------- */
+input[type="number"] { -moz-appearance: textfield; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* ---------- Date & time — browser chrome ---------- */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(.5) sepia(1) saturate(3) hue-rotate(5deg);
+  opacity: .6;
+  cursor: pointer;
+}
+
+/* ---------- Select — custom chevron ---------- */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  cursor: pointer;
+}
+
+select option {
+  background: var(--surface);
+  color: var(--text);
 }
 
 /* ---------- Submit button ---------- */
@@ -151,9 +180,7 @@ button[type="submit"]:hover {
   transform: translateY(-1px);
 }
 
-button[type="submit"]:active {
-  transform: translateY(0);
-}
+button[type="submit"]:active { transform: translateY(0); }
 
 /* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar { width: 6px; }
@@ -163,5 +190,5 @@ button[type="submit"]:active {
 /* ---------- Responsive ---------- */
 @media (max-width: 480px) {
   form { padding: 2rem 1.4rem; }
-  button[type="submit"] { width: 100%; justify-content: center; }
+  button[type="submit"] { width: 100%; }
 }

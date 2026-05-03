@@ -4,14 +4,274 @@
   <meta charset="UTF-8">
   <title>Usos del Código</title>
   <style>
-    body { font-family: sans-serif; margin: 2rem; color: #111; }
-    h1 { margin-bottom: .5rem; }
-    .meta { color: #6b7280; font-size: .9rem; margin-bottom: 1.5rem; }
-    .btn { padding: .4rem 1rem; border-radius: 6px; border: none; cursor: pointer; font-size: .9rem; text-decoration: none; display: inline-block; background: #6b7280; color: #fff; margin-bottom: 1.5rem; }
-    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-    th, td { padding: .6rem .8rem; border: 1px solid #e5e7eb; text-align: left; }
-    th { background: #f3f4f6; }
-    .empty { color: #6b7280; }
+     /* ===========================
+   CinemaDaw — Promo List
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+:root {
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --surface-hover:#16161f;
+  --border:       #2a2a3a;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --danger:       #c94c4c;
+  --danger-dim:   #7a2a2a;
+  --success:      #4caf7d;
+  --success-dim:  #1a4a30;
+  --info:         #4c8ec9;
+  --info-dim:     #1a3a5a;
+  --radius:       4px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+}
+
+/* ---------- Page ---------- */
+.page {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ---------- Header ---------- */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1.2rem;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+}
+
+.page-title::before {
+  content: '🎟️';
+  font-size: .42em;
+  vertical-align: middle;
+  margin-right: .4em;
+  filter: grayscale(.4);
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin-top: .4rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: .7rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ---------- Feedback ---------- */
+.feedback {
+  padding: .75rem 1.1rem;
+  border-radius: var(--radius);
+  font-size: .95rem;
+  font-weight: 300;
+  border: 1px solid transparent;
+}
+
+.feedback--success {
+  background: rgba(76,175,125,.1);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.feedback--error {
+  background: rgba(201,76,76,.1);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: .5rem 1.6rem;
+  border-radius: var(--radius);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background .2s, color .2s, transform .15s;
+  white-space: nowrap;
+  background: transparent;
+}
+
+.btn:active { transform: translateY(0); }
+
+.btn-primary { border-color: var(--gold); color: var(--gold); }
+.btn-primary:hover { background: var(--gold); color: var(--bg); transform: translateY(-1px); }
+
+.btn-secondary { border-color: var(--border); color: var(--text-muted); }
+.btn-secondary:hover { border-color: var(--text-muted); color: var(--text); transform: translateY(-1px); }
+
+/* Small variants */
+.btn-sm { padding: .28rem .7rem; font-size: .72rem; letter-spacing: .1em; }
+
+.btn-sm.btn-edit   { border-color: var(--gold-dim); color: var(--gold); }
+.btn-sm.btn-edit:hover { background: rgba(201,168,76,.12); border-color: var(--gold); }
+
+.btn-sm.btn-info   { border-color: var(--info-dim); color: var(--info); }
+.btn-sm.btn-info:hover { background: rgba(76,142,201,.12); border-color: var(--info); }
+
+.btn-sm.btn-toggle { border-color: var(--border); color: var(--text-muted); }
+.btn-sm.btn-toggle:hover { border-color: var(--text-muted); color: var(--text); }
+
+.btn-sm.btn-danger { border-color: var(--danger-dim); color: var(--danger); }
+.btn-sm.btn-danger:hover { background: rgba(201,76,76,.12); border-color: var(--danger); }
+
+/* ---------- Table wrap ---------- */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 8px 48px rgba(0,0,0,.55);
+}
+
+table { width: 100%; border-collapse: collapse; }
+
+thead tr {
+  background: rgba(201,168,76,.06);
+  border-bottom: 1px solid var(--border);
+}
+
+thead th {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .75rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: .85rem 1rem;
+  text-align: left;
+  font-weight: 400;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--surface-hover); }
+
+tbody td {
+  padding: .75rem 1rem;
+  font-size: .98rem;
+  font-weight: 300;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+/* Code column */
+.code-cell {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: .14em;
+  color: var(--gold);
+}
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block;
+  padding: .2rem .7rem;
+  border-radius: 99px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.badge-green  { background: rgba(76,175,125,.12); border-color: var(--success); color: var(--success); }
+.badge-red    { background: rgba(201,76,76,.12);  border-color: var(--danger);  color: var(--danger); }
+.badge-gray   { background: rgba(122,120,112,.12); border-color: var(--text-muted); color: var(--text-muted); }
+
+/* ---------- Actions cell ---------- */
+.actions-cell {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.actions-cell form { display: inline; }
+
+/* ---------- Empty ---------- */
+.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+/* ---------- Back link ---------- */
+.back-link {
+  color: var(--text-muted);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.back-link::before { content: '←'; margin-right: .3em; }
+.back-link:hover { color: var(--gold); }
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+  body { padding: 1.5rem 1rem; }
+  .page-header { flex-direction: column; align-items: flex-start; }
+  thead th, tbody td { padding: .6rem .6rem; font-size: .85rem; }
+  .btn-sm { font-size: .65rem; padding: .25rem .55rem; }
+}
   </style>
 </head>
 <body>

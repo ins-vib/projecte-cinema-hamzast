@@ -1,0 +1,358 @@
+/* ===========================
+   CinemaDaw — Contacte
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+/* ---------- Variables ---------- */
+:root {
+  --bg:           #0a0a0f;
+  --surface:      #111118;
+  --surface-alt:  #0d0d14;
+  --border:       #2a2a3a;
+  --border-focus: #c9a84c;
+  --gold:         #c9a84c;
+  --gold-dim:     #7a612a;
+  --text:         #e8e4d9;
+  --text-muted:   #7a7870;
+  --placeholder:  #3e3e50;
+  --radius:       4px;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,.10), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent, transparent 3px,
+      rgba(255,255,255,.012) 3px,
+      rgba(255,255,255,.012) 4px
+    );
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+}
+
+/* ---------- Two-column layout ---------- */
+.page {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* ---------- LEFT COLUMN — info ---------- */
+.info {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 3rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle gold top border */
+.info::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* Brand */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.brand-icon {
+  font-size: 1.1rem;
+  filter: grayscale(.4);
+}
+
+.brand-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: .14em;
+  color: var(--gold);
+}
+
+/* Title */
+.info-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.6rem;
+  line-height: .95;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.info-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 28ch;
+}
+
+/* Contact details list */
+.contact-details {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-top: .4rem;
+}
+
+.contact-details li {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  padding-left: .8rem;
+  border-left: 2px solid var(--gold-dim);
+}
+
+.detail-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.detail-value {
+  font-size: .98rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* Filmstrip decoration */
+.filmstrip {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  opacity: .18;
+}
+
+.frame {
+  width: 36px;
+  height: 28px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.frame::before,
+.frame::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 1px;
+}
+
+.frame::before { top: -5px; }
+.frame::after  { bottom: -5px; }
+
+/* ---------- RIGHT COLUMN — form ---------- */
+.form-col {
+  padding: 3rem 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* ---------- Two inputs in a row ---------- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ---------- Field ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ---------- Shared input styles ---------- */
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  padding: .65rem .9rem;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--placeholder);
+  font-style: italic;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(201,168,76,.12);
+}
+
+/* ---------- Select ---------- */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .9rem center;
+  cursor: pointer;
+}
+
+select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ---------- Textarea ---------- */
+textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.6;
+}
+
+/* ---------- Form footer ---------- */
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: .4rem;
+}
+
+.privacy-note {
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+.privacy-note a {
+  color: var(--gold-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color .2s;
+}
+
+.privacy-note a:hover { color: var(--gold); }
+
+/* ---------- Submit button ---------- */
+button[type="submit"] {
+  padding: .65rem 2.2rem;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: var(--radius);
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .2s, color .2s, transform .15s;
+}
+
+button[type="submit"]:hover {
+  background: var(--gold);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active { transform: translateY(0); }
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .info {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 2.4rem 1.8rem;
+    gap: 1.4rem;
+  }
+
+  .info-title { font-size: 2.6rem; }
+
+  .filmstrip { display: none; }
+
+  .form-col { padding: 2.4rem 1.8rem; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .form-footer { flex-direction: column; align-items: flex-start; }
+
+  button[type="submit"] { width: 100%; text-align: center; }
+}
+/* ---------- Back link ---------- */
+a[href="/admin"] {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  margin-top: 2.8rem;
+  color: var(--text-muted);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .9rem;
+  letter-spacing: .1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color .2s;
+}
