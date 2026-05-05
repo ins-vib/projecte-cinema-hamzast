@@ -57,7 +57,11 @@ public class cinemaController {
         return "cinema/create-cinema";
     }
     @PostMapping("/cinema/create")
-    public String create(Cinema cinema){
+    public String create(Cinema cinema, Model model){
+        if (hasEmptyFields(cinema)) {
+            model.addAttribute("cinema", cinema);
+            return FormValidation.withRequiredFieldsError(model, "cinema/create-cinema");
+        }
         cinemaRepository.save(cinema);
         return "redirect:/cinemes";
     }
@@ -86,15 +90,23 @@ public class cinemaController {
     }
 
     @PostMapping("/cinema/edit")
-    public String edit(Cinema cinema){
+    public String edit(Cinema cinema, Model model){
+        if (hasEmptyFields(cinema)) {
+            model.addAttribute("cinema", cinema);
+            return FormValidation.withRequiredFieldsError(model, "cinema/edit-cinema");
+        }
         cinemaRepository.save(cinema);
         return "redirect:/cinemes";
     }
 
-
+    private boolean hasEmptyFields(Cinema cinema) {
+        return FormValidation.isBlank(cinema.getName())
+                || FormValidation.isBlank(cinema.getAdress())
+                || FormValidation.isBlank(cinema.getCity())
+                || FormValidation.isBlank(cinema.getPostalCode());
+    }
 
 
     
 }
-
 

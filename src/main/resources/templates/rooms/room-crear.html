@@ -27,15 +27,16 @@
             <input type="hidden" th:field="*{cinema.id}" />
 
             <legend>🎬 Nova Sala</legend>
+            <div class="error" th:if="${error}" th:text="${error}"></div>
 
             <div class="field">
                 <label>Nom de la sala</label>
-                <input type="text" th:field="*{name}" placeholder="Ex: Sala 1, IMAX..." />
+                <input type="text" th:field="*{name}" placeholder="Ex: Sala 1, IMAX..." required />
             </div>
 
             <div class="field">
                 <label>Capacitat</label>
-                <input type="text" th:field="*{capacity}" placeholder="Ex: 120" />
+                <input type="text" th:field="*{capacity}" placeholder="Ex: 120" required />
             </div>
 
             <div class="form__actions">
@@ -52,6 +53,6 @@
             <a href="/logout" class="btn btn--outline btn--sm">Tancar Sessió</a>
         </div>
     </footer>
-
+<script th:src="@{/js/form-validation.js}"></script>
 </body>
 </html>

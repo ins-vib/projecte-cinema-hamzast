@@ -63,8 +63,13 @@ public class RoomController {
     }
 
     @PostMapping("/room/new")
-    public String altaRoom(@ModelAttribute Room room) {
+    public String altaRoom(@ModelAttribute Room room, Model model) {
         Long cinemaid = room.getCinema().getId();
+        if (hasEmptyFields(room)) {
+            model.addAttribute("room", room);
+            return FormValidation.withRequiredFieldsError(model, "/rooms/room-crear");
+        }
+
         Optional<Cinema> cinema = cinemaRepository.findById(cinemaid);
         if (cinema.isPresent()) {
             room.setCinema(cinema.get());
@@ -87,9 +92,14 @@ public class RoomController {
 
   @Transactional
 @PostMapping("/room/editar")
-public String editRoom(@ModelAttribute Room room) {
+public String editRoom(@ModelAttribute Room room, Model model) {
         Long cinemaid = room.getCinema().getId();
         Long roomId = room.getId();
+
+        if (hasEmptyFields(room)) {
+            model.addAttribute("room", room);
+            return FormValidation.withRequiredFieldsError(model, "/rooms/room-edit");
+        }
 
         Optional<Cinema> cinema = cinemaRepository.findById(cinemaid);
         Optional<Room> existingRoom = roomRepository.findById(roomId);
@@ -136,5 +146,9 @@ public String editRoom(@ModelAttribute Room room) {
         Room room = optional.get();
         model.addAttribute("room", room);
         return "/rooms/room-detail";
+    }
+
+    private boolean hasEmptyFields(Room room) {
+        return FormValidation.isBlank(room.getName()) || room.getCapacity() <= 0;
     }
 }

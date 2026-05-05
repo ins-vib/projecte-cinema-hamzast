@@ -47,38 +47,39 @@
 
     <!-- Right column: form -->
     <main class="form-col">
-        <form th:action="@{/contact/send}" method="post" class="contact-form" novalidate>
+        <form th:action="@{/contact/send}" method="post" class="contact-form">
+            <div class="error" th:if="${error}" th:text="${error}"></div>
 
             <div class="form-row">
                 <div class="field">
                     <label for="nom">Nom</label>
-                    <input type="text" id="nom" name="nom" placeholder="El teu nom" autocomplete="given-name" required />
+                    <input type="text" id="nom" name="nom" th:value="${nom}" placeholder="El teu nom" autocomplete="given-name" required />
                 </div>
                 <div class="field">
                     <label for="cognom">Cognom</label>
-                    <input type="text" id="cognom" name="cognom" placeholder="El teu cognom" autocomplete="family-name" required />
+                    <input type="text" id="cognom" name="cognom" th:value="${cognom}" placeholder="El teu cognom" autocomplete="family-name" required />
                 </div>
             </div>
 
             <div class="field">
                 <label for="email">Correu electrònic</label>
-                <input type="email" id="email" name="email" placeholder="tu@exemple.com" autocomplete="email" required />
+                <input type="email" id="email" name="email" th:value="${email}" placeholder="tu@exemple.com" autocomplete="email" required />
             </div>
 
             <div class="field">
                 <label for="assumpte">Assumpte</label>
                 <select id="assumpte" name="assumpte" required>
-                    <option value="" disabled selected>Selecciona un motiu...</option>
-                    <option value="reserves">Reserves i entrades</option>
-                    <option value="projeccions">Informació sobre projeccions</option>
-                    <option value="incidencies">Incidències tècniques</option>
-                    <option value="altres">Altres consultes</option>
+                    <option value="" disabled th:selected="${assumpte == null or assumpte == ''}">Selecciona un motiu...</option>
+                    <option value="reserves" th:selected="${assumpte == 'reserves'}">Reserves i entrades</option>
+                    <option value="projeccions" th:selected="${assumpte == 'projeccions'}">Informació sobre projeccions</option>
+                    <option value="incidencies" th:selected="${assumpte == 'incidencies'}">Incidències tècniques</option>
+                    <option value="altres" th:selected="${assumpte == 'altres'}">Altres consultes</option>
                 </select>
             </div>
 
             <div class="field">
                 <label for="missatge">Missatge</label>
-                <textarea id="missatge" name="missatge" rows="5" placeholder="Explica'ns en què et podem ajudar..." required></textarea>
+                <textarea id="missatge" name="missatge" rows="5" placeholder="Explica'ns en què et podem ajudar..." required th:text="${missatge}"></textarea>
             </div>
 
             <div class="form-footer">
@@ -94,5 +95,6 @@
 
 </div>
 
+<script th:src="@{/js/form-validation.js}"></script>
 </body>
 </html>

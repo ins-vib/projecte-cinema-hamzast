@@ -95,15 +95,16 @@ public class ScreeningController {
 
     // Guardar nova projecció
     @PostMapping("/screening/new")
-    public String createScreening(@ModelAttribute Screening screening) {
+    public String createScreening(@ModelAttribute Screening screening, Model model) {
         if (screening.getRoom() == null || screening.getRoom().getId() == null) {
             return "redirect:/screenings/all";
         }
 
         Long roomId = screening.getRoom().getId();
-        if (screening.getMovie() == null || screening.getMovie().getId() == null
-                || screening.getScreeningDate() == null || screening.getScreeningTime() == null) {
-            return "redirect:/screening/create/" + roomId;
+        if (hasEmptyFields(screening)) {
+            model.addAttribute("screening", screening);
+            model.addAttribute("pelicules", peliculaRepository.findAll());
+            return FormValidation.withRequiredFieldsError(model, "screenings/screening-crear");
         }
 
         Optional<Room> room = roomRepository.findById(roomId);
@@ -130,16 +131,17 @@ public class ScreeningController {
 
     // Guardar canvis projecció
     @PostMapping("/screening/editar")
-    public String updateScreening(@ModelAttribute Screening screening) {
+    public String updateScreening(@ModelAttribute Screening screening, Model model) {
         if (screening.getRoom() == null || screening.getRoom().getId() == null || screening.getId() == null) {
             return "redirect:/screenings/all";
         }
 
         Long roomId = screening.getRoom().getId();
         Long screeningId = screening.getId();
-        if (screening.getMovie() == null || screening.getMovie().getId() == null
-                || screening.getScreeningDate() == null || screening.getScreeningTime() == null) {
-            return "redirect:/screening/edit/" + screeningId;
+        if (hasEmptyFields(screening)) {
+            model.addAttribute("screening", screening);
+            model.addAttribute("pelicules", peliculaRepository.findAll());
+            return FormValidation.withRequiredFieldsError(model, "screenings/screening-edit");
         }
 
         Optional<Screening> existing = screeningRepository.findById(screeningId);
@@ -168,5 +170,13 @@ public class ScreeningController {
             return "redirect:/screening/llista/" + roomId;
         }
         return "redirect:/cinemes";
+    }
+
+    private boolean hasEmptyFields(Screening screening) {
+        return screening.getMovie() == null
+                || screening.getMovie().getId() == null
+                || screening.getScreeningDate() == null
+                || screening.getScreeningTime() == null
+                || screening.getPrice() <= 0;
     }
 }

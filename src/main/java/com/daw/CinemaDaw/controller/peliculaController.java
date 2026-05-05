@@ -58,7 +58,11 @@ public class peliculaController {
         return "CarpetaPelicula/crear-pelicula";
     }
     @PostMapping("/pelicula/create")
-    public String create(pelicula pelicula){
+    public String create(pelicula pelicula, Model model){
+        if (hasEmptyFields(pelicula)) {
+            model.addAttribute("pelicula", pelicula);
+            return FormValidation.withRequiredFieldsError(model, "CarpetaPelicula/crear-pelicula");
+        }
         peliculaRepository.save(pelicula);
         return "redirect:/pelicula";
     }
@@ -87,12 +91,21 @@ public class peliculaController {
     }
 
     @PostMapping("/pelicula/edit")
-    public String edit(pelicula pelicula){
+    public String edit(pelicula pelicula, Model model){
+        if (hasEmptyFields(pelicula)) {
+            model.addAttribute("pelicula", pelicula);
+            return FormValidation.withRequiredFieldsError(model, "CarpetaPelicula/editar-pelicula");
+        }
         peliculaRepository.save(pelicula);
         return "redirect:/pelicula";
     }
 
-
+    private boolean hasEmptyFields(pelicula pelicula) {
+        return FormValidation.isBlank(pelicula.getTitol())
+                || pelicula.getDurada() <= 0
+                || FormValidation.isBlank(pelicula.getSinopsi())
+                || FormValidation.isBlank(pelicula.getEstrena());
+    }
 
 
 }

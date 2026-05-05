@@ -9,22 +9,24 @@
 <body>
     <form th:action="@{/pelicula/edit}" th:object="${pelicula}" method="post">
       <legend>Editar pelicula</legend>
+      <div class="error" th:if="${error}" th:text="${error}"></div>
 
       <input type="hidden" th:field="*{id}" />
 
       <label>Titol:</label>
-      <input type="text" th:field="*{Titol}" />
+      <input type="text" th:field="*{Titol}" required />
 
       <label>Durada:</label>
-      <input type="text" th:field="*{Durada}" />
+      <input type="text" th:field="*{Durada}" required />
 
       <label>Sinopsi:</label>
-      <input type="text" th:field="*{sinopsi}" />
+      <input type="text" th:field="*{sinopsi}" required />
 
       <label>Estrena:</label>
-      <input type="text" th:field="*{estrena}" />
+      <input type="text" th:field="*{estrena}" required />
 
       <button type="submit">Guardar</button>
     </form>
+    <script th:src="@{/js/form-validation.js}"></script>
 </body>
 </html>

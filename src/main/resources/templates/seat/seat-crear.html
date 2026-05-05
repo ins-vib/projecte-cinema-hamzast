@@ -8,33 +8,35 @@
 <body>
     <form th:action="@{/seat/new}" th:object="${seat}" method="post">
         <legend>Nova silla</legend>
+        <div class="error" th:if="${error}" th:text="${error}"></div>
 
         <input type="hidden" th:field="*{room.id}" />
 
         <label>Fila:</label>
-<input type="text" th:field="*{seatRow}" placeholder="A, B, C..." />
+<input type="text" th:field="*{seatRow}" placeholder="A, B, C..." required />
 
         <label>Número de silla:</label>
-        <input type="number" th:field="*{seatNumber}" /><br /><br />
+        <input type="number" th:field="*{seatNumber}" required /><br /><br />
 
         <label>Posició X:</label>
-        <input type="number" th:field="*{posX}" /><br /><br />
+        <input type="number" th:field="*{posX}" required /><br /><br />
 
         <label>Posició Y:</label>
-        <input type="number" th:field="*{posY}" /><br /><br />
+        <input type="number" th:field="*{posY}" required /><br /><br />
 
         <label>Tipus:</label>
-        <select th:field="*{type}">
+        <select th:field="*{type}" required>
             <option th:each="t : ${seatTypes}" th:value="${t}" th:text="${t}"></option>
         </select><br /><br />
 
         <label>Estat:</label>
-<select th:field="*{active}">
+<select th:field="*{active}" required>
     <option value="true">Lliure</option>
     <option value="false">Ocupat</option>
 </select><br /><br />
 
         <button type="submit">Guardar</button>
     </form>
+    <script th:src="@{/js/form-validation.js}"></script>
 </body>
 </html>

@@ -22,21 +22,22 @@
     </header>
 
     <main>
-        <form th:action="@{/room/new}" th:object="${room}" method="post">
+        <form th:action="@{/room/editar}" th:object="${room}" method="post">
 
             <input type="hidden" th:field="*{cinema.id}" />
 
             <legend>🎬 Editar Sala</legend>
+            <div class="error" th:if="${error}" th:text="${error}"></div>
     <input type="hidden" th:field="*{id}" />
 
             <div class="field">
                 <label>Nom de la sala</label>
-                <input type="text" th:field="*{name}" placeholder="Ex: Sala 1, IMAX..." />
+                <input type="text" th:field="*{name}" placeholder="Ex: Sala 1, IMAX..." required />
             </div>
 
             <div class="field">
                 <label>Capacitat</label>
-                <input type="text" th:field="*{capacity}" placeholder="Ex: 120" />
+                <input type="text" th:field="*{capacity}" placeholder="Ex: 120" required />
             </div>
 
             <div class="form__actions">
@@ -53,6 +54,6 @@
             <a href="/logout" class="btn btn--outline btn--sm">Tancar Sessió</a>
         </div>
     </footer>
-
+<script th:src="@{/js/form-validation.js}"></script>
 </body>
 </html>

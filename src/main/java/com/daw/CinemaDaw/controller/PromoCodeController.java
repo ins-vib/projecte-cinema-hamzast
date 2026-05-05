@@ -42,6 +42,11 @@ public class PromoCodeController {
     /** Save new promo code */
     @PostMapping("/new")
     public String create(PromoCode promo, Model model) {
+        if (hasEmptyFields(promo)) {
+            model.addAttribute("promo", promo);
+            return FormValidation.withRequiredFieldsError(model, "admin/promos/promo-form");
+        }
+
         // Validate discount range
         if (promo.getDiscountPercent() < 1 || promo.getDiscountPercent() > 100) {
             model.addAttribute("promo", promo);
@@ -88,6 +93,12 @@ public class PromoCodeController {
         if (opt.isEmpty()) return "redirect:/admin/promos";
 
         PromoCode existing = opt.get();
+
+        if (hasEmptyFields(form)) {
+            model.addAttribute("promo", existing);
+            model.addAttribute("editing", true);
+            return FormValidation.withRequiredFieldsError(model, "admin/promos/promo-form");
+        }
 
         // Validate discount range
         if (form.getDiscountPercent() < 1 || form.getDiscountPercent() > 100) {
@@ -140,5 +151,13 @@ public class PromoCodeController {
         model.addAttribute("promo", opt.get());
         model.addAttribute("usages", promoService.getUsagesForCode(id));
         return "admin/promos/promo-usages";
+    }
+
+    private boolean hasEmptyFields(PromoCode promo) {
+        return FormValidation.isBlank(promo.getCode())
+                || promo.getDiscountPercent() <= 0
+                || promo.getValidFrom() == null
+                || promo.getValidUntil() == null
+                || promo.getMaxUses() <= 0;
     }
 }

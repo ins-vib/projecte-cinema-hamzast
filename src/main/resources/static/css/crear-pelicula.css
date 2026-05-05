@@ -17,6 +17,12 @@
   --radius:       4px;
 }
 
+.error {
+  color: #dc2626;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {

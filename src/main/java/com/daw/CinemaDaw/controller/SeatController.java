@@ -56,8 +56,14 @@ public class SeatController {
 
     // Guardar nova silla
  @PostMapping("/seat/new")
-public String createSeat(@ModelAttribute Seat seat) {
+public String createSeat(@ModelAttribute Seat seat, Model model) {
     Long roomId = seat.getRoom().getId();
+    if (hasEmptyFields(seat)) {
+        model.addAttribute("seat", seat);
+        model.addAttribute("seatTypes", SeatType.values());
+        return FormValidation.withRequiredFieldsError(model, "seat/seat-crear");
+    }
+
     Optional<Room> room = roomRepository.findById(roomId);
     if (room.isPresent()) {
         seat.setRoom(room.get());
@@ -84,9 +90,15 @@ public String createSeat(@ModelAttribute Seat seat) {
 
     // Guardar canvis silla
     @PostMapping("/seat/editar")
-    public String updateSeat(@ModelAttribute Seat seat) {
+    public String updateSeat(@ModelAttribute Seat seat, Model model) {
         Long roomId = seat.getRoom().getId();
         Long seatId = seat.getId();
+
+        if (hasEmptyFields(seat)) {
+            model.addAttribute("seat", seat);
+            model.addAttribute("seatTypes", SeatType.values());
+            return FormValidation.withRequiredFieldsError(model, "seat/seat-edit");
+        }
 
         Optional<Room> room = roomRepository.findById(roomId);
         Optional<Seat> existingSeat = seatRepository.findById(seatId);
@@ -140,6 +152,12 @@ public String llista(@PathVariable Long roomId, Model model) {
 
 
 
+
+    private boolean hasEmptyFields(Seat seat) {
+        return FormValidation.isBlank(seat.getSeatRow())
+                || seat.getSeatNumber() <= 0
+                || seat.getType() == null;
+    }
 
 
 }
