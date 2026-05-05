@@ -13,15 +13,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.daw.CinemaDaw.domain.cinema.Cinema;
 import com.daw.CinemaDaw.repository.CinemaRepository;
+import com.daw.CinemaDaw.repository.RoomRepository;
+import com.daw.CinemaDaw.repository.ScreeningRepository;
 
 @Controller
 @PreAuthorize("hasRole('ADMIN')")  // protege TODOS los métodos de la clase
 public class cinemaController {
 
     private CinemaRepository cinemaRepository;
+    private RoomRepository roomRepository;
+    private ScreeningRepository screeningRepository;
 
-    public cinemaController(CinemaRepository cinemaRepository){
-        this.cinemaRepository=cinemaRepository;
+    public cinemaController(CinemaRepository cinemaRepository, RoomRepository roomRepository, ScreeningRepository screeningRepository){
+        this.cinemaRepository = cinemaRepository;
+        this.roomRepository = roomRepository;
+        this.screeningRepository = screeningRepository;
     }
 
    
@@ -57,22 +63,23 @@ public class cinemaController {
         return "cinema/create-cinema";
     }
     @PostMapping("/cinema/create")
-    public String create(Cinema cinema, Model model){
-        if (hasEmptyFields(cinema)) {
-            model.addAttribute("cinema", cinema);
-            return FormValidation.withRequiredFieldsError(model, "cinema/create-cinema");
-        }
+    public String create(Cinema cinema){
         cinemaRepository.save(cinema);
         return "redirect:/cinemes";
     }
 
 //borrar cinema
+    @jakarta.transaction.Transactional
     @GetMapping("/cinema/delete/{id}")
     public String delete(@PathVariable Long id, Model model){
         Optional<Cinema> optional = cinemaRepository.findById(id);
         if(optional.isPresent()){
-            Cinema cinema = optional.get();
-            cinemaRepository.delete(cinema);
+            // 1. Borrar screenings de cada sala
+            roomRepository.findByCinemaId(id).forEach(room ->
+                screeningRepository.deleteAll(screeningRepository.findByRoom_Id(room.getId()))
+            );
+            // 2. Borrar el cinema (cascade borra rooms y seats)
+            cinemaRepository.delete(optional.get());
         }
         return "redirect:/cinemes";
     }
@@ -90,23 +97,13 @@ public class cinemaController {
     }
 
     @PostMapping("/cinema/edit")
-    public String edit(Cinema cinema, Model model){
-        if (hasEmptyFields(cinema)) {
-            model.addAttribute("cinema", cinema);
-            return FormValidation.withRequiredFieldsError(model, "cinema/edit-cinema");
-        }
+    public String edit(Cinema cinema){
         cinemaRepository.save(cinema);
         return "redirect:/cinemes";
     }
 
-    private boolean hasEmptyFields(Cinema cinema) {
-        return FormValidation.isBlank(cinema.getName())
-                || FormValidation.isBlank(cinema.getAdress())
-                || FormValidation.isBlank(cinema.getCity())
-                || FormValidation.isBlank(cinema.getPostalCode());
-    }
+
 
 
     
 }
-

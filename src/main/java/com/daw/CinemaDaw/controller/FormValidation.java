@@ -4,7 +4,7 @@ import org.springframework.ui.Model;
 
 public final class FormValidation {
 
-    public static final String REQUIRED_FIELDS_MESSAGE = "No puedes dejar ningún campo sin rellenar.";
+    public static final String REQUIRED_FIELDS_MESSAGE = "No pots deixar cap camp sense emplenar.";
 
     private FormValidation() {
     }

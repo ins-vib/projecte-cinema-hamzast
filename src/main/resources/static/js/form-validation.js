@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const requiredMessage = "No puedes dejar ningún campo sin rellenar.";
+  const requiredMessage = "No pots deixar cap camp sense emplenar.";
 
   document.querySelectorAll("input[required], select[required], textarea[required]").forEach((field) => {
     field.addEventListener("invalid", () => {

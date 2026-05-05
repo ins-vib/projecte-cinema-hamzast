@@ -16,6 +16,7 @@ import com.daw.CinemaDaw.domain.cinema.Seat;
 import com.daw.CinemaDaw.domain.cinema.SeatType;
 import com.daw.CinemaDaw.repository.CinemaRepository;
 import com.daw.CinemaDaw.repository.RoomRepository;
+import com.daw.CinemaDaw.repository.ScreeningRepository;
 import com.daw.CinemaDaw.repository.SeatRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,11 +29,13 @@ public class RoomController {
     private RoomRepository roomRepository;
     private CinemaRepository cinemaRepository;
     private SeatRepository seatRepository;
+    private ScreeningRepository screeningRepository;
 
-    public RoomController(RoomRepository roomRepository, CinemaRepository cinemaRepository, SeatRepository seatRepository) {
+    public RoomController(RoomRepository roomRepository, CinemaRepository cinemaRepository, SeatRepository seatRepository, ScreeningRepository screeningRepository) {
         this.roomRepository = roomRepository;
         this.cinemaRepository = cinemaRepository;
         this.seatRepository = seatRepository;
+        this.screeningRepository = screeningRepository;
     }
 
     private void generateSeats(Room room) {
@@ -63,13 +66,8 @@ public class RoomController {
     }
 
     @PostMapping("/room/new")
-    public String altaRoom(@ModelAttribute Room room, Model model) {
+    public String altaRoom(@ModelAttribute Room room) {
         Long cinemaid = room.getCinema().getId();
-        if (hasEmptyFields(room)) {
-            model.addAttribute("room", room);
-            return FormValidation.withRequiredFieldsError(model, "/rooms/room-crear");
-        }
-
         Optional<Cinema> cinema = cinemaRepository.findById(cinemaid);
         if (cinema.isPresent()) {
             room.setCinema(cinema.get());
@@ -92,14 +90,9 @@ public class RoomController {
 
   @Transactional
 @PostMapping("/room/editar")
-public String editRoom(@ModelAttribute Room room, Model model) {
+public String editRoom(@ModelAttribute Room room) {
         Long cinemaid = room.getCinema().getId();
         Long roomId = room.getId();
-
-        if (hasEmptyFields(room)) {
-            model.addAttribute("room", room);
-            return FormValidation.withRequiredFieldsError(model, "/rooms/room-edit");
-        }
 
         Optional<Cinema> cinema = cinemaRepository.findById(cinemaid);
         Optional<Room> existingRoom = roomRepository.findById(roomId);
@@ -125,12 +118,15 @@ public String editRoom(@ModelAttribute Room room, Model model) {
         return "redirect:/cinema/" + cinemaid;
     }
 
+    @Transactional
     @GetMapping("/room/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         Optional<Room> optional = roomRepository.findById(id);
         if (optional.isPresent()) {
             Room room = optional.get();
             Long cinemaid = room.getCinema().getId();
+            // Borrar screenings antes para evitar violación de FK
+            screeningRepository.deleteAll(screeningRepository.findByRoom_Id(id));
             roomRepository.delete(room);
             return "redirect:/cinema/" + cinemaid;
         }
@@ -146,9 +142,5 @@ public String editRoom(@ModelAttribute Room room, Model model) {
         Room room = optional.get();
         model.addAttribute("room", room);
         return "/rooms/room-detail";
-    }
-
-    private boolean hasEmptyFields(Room room) {
-        return FormValidation.isBlank(room.getName()) || room.getCapacity() <= 0;
     }
 }
