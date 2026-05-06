@@ -1,0 +1,130 @@
+@startuml CinemaDaw
+
+skinparam classAttributeIconSize 0
+skinparam classFontSize 13
+skinparam defaultFontName Arial
+skinparam linetype ortho
+
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum SeatType {
+  STANDARD
+  PREMIUM
+  ADAPTED
+}
+
+class User {
+  +Long id
+  +String username
+  +String password
+  +Role role
+}
+
+class Cinema {
+  -Long id
+  -String name
+  -String adress
+  -String city
+  -String postalCode
+}
+
+class Room {
+  -Long id
+  -String name
+  -int capacity
+}
+
+class Pelicula {
+  -Long id
+  -String titol
+  -int durada
+  -String sinopsi
+  -String estrena
+}
+
+class Seat {
+  -Long id
+  -String seatRow
+  -int seatNumber
+  -int posX
+  -int posY
+  -SeatType type
+  -boolean isActive
+}
+
+class Screening {
+  -Long id
+  -LocalDateTime screeningDateTime
+  -double price
+}
+
+class CartItem {
+  -Long id
+  -LocalDateTime createdAt
+}
+
+class TicketOrder {
+  -Long id
+  -LocalDateTime purchasedAt
+}
+
+class Ticket {
+  -Long id
+  -double paidPrice
+}
+
+class PromoCode {
+  -Long id
+  -String code
+  -int discountPercent
+  -LocalDate validFrom
+  -LocalDate validUntil
+  -int maxUses
+  -int timesUsed
+  -boolean active
+  +boolean isValid()
+  +double applyTo(double subtotal)
+  +void incrementUsage()
+}
+
+class PromoUsage {
+  -Long id
+  -double savedAmount
+  -LocalDateTime usedAt
+}
+
+class News  {
+  -String headline
+  -String body
+}
+
+' Relaciones
+User "1" --> "1" Role : role
+
+Cinema "1" *-- "1..*" Room : rooms (cascade)
+
+Room "1" *-- "1..*" Seat : seats (cascade)
+
+Seat --> SeatType : type
+
+Screening "1" --> "1" Pelicula : movie
+Screening "1" --> "1" Room : room
+
+CartItem "many" --> "1" User : user
+CartItem "many" --> "1" Screening : screening
+CartItem "many" --> "1" Seat : seat
+
+TicketOrder "many" --> "1" User : user
+TicketOrder "1" *-- "1..*" Ticket : tickets (cascade)
+
+Ticket "many" --> "1" Screening : screening
+Ticket "many" --> "1" Seat : seat
+
+PromoUsage "many" --> "1" PromoCode : promoCode
+PromoUsage "many" --> "1" User : user
+PromoUsage "many" --> "1" TicketOrder : order
+
+@enduml
