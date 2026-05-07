@@ -207,3 +207,23 @@ header p {
   color: var(--cream);
   border-color: rgba(245, 240, 232, 0.4);
 }
+ 
+/* Gèneres */
+.generes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.8rem 0;
+}
+ 
+.genere-tag {
+    background: rgba(133, 74, 145, 0.2);
+    border: 1px solid rgba(133, 74, 145, 0.5);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c9a0d4;
+}

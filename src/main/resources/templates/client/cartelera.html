@@ -11,7 +11,7 @@
 
     <div style="max-width:1200px;margin:0 auto;padding:2rem 2rem 0;">
        <nav th:replace="~{client/fragments :: clientHeader}"></nav>
-    </div >
+    </div>
 
     <header>
         <h1>Cartelera de CinemaDaw</h1>
@@ -24,6 +24,14 @@
             <h2 th:text="${pelicula.Titol}">Titol pelicula</h2>
             <p><strong>Durada:</strong> <span th:text="${pelicula.Durada}">120</span> min</p>
             <p><strong>Estrena:</strong> <span th:text="${pelicula.estrena}">2026-01-01</span></p>
+
+            <!-- GÈNERES -->
+            <div class="generes" th:if="${not #sets.isEmpty(pelicula.generes)}">
+                <span class="genere-tag"
+                      th:each="g : ${pelicula.generes}"
+                      th:text="${g.nom}">Gènere</span>
+            </div>
+
             <p th:text="${pelicula.sinopsi}">Sinopsi de la pelicula.</p>
             <a class="btn" th:href="@{/cartelera/{id}(id=${pelicula.id})}">Veure detall</a>
         </article>

@@ -76,3 +76,16 @@ VALUES -- Avatar (id=1)
     ('2026-05-02T17:00', 7.50, 6, 3),
     ('2026-05-02T20:00', 8.50, 6, 3),
     ('2026-05-03T18:00', 8.00, 6, 1);
+
+
+-- Afegir al final de data.sql
+
+INSERT INTO GENERE (NOM) VALUES ('Acció');
+INSERT INTO GENERE (NOM) VALUES ('Comèdia');
+INSERT INTO GENERE (NOM) VALUES ('Drama');
+INSERT INTO GENERE (NOM) VALUES ('Ciència-ficció');
+INSERT INTO GENERE (NOM) VALUES ('Terror');
+INSERT INTO GENERE (NOM) VALUES ('Aventura');
+INSERT INTO GENERE (NOM) VALUES ('Thriller');
+INSERT INTO GENERE (NOM) VALUES ('Fantasia');
+INSERT INTO GENERE (NOM) VALUES ('Romance');
